@@ -1,10 +1,10 @@
 # Feedback Portal
-# Introduction
+### Introduction
 The Feedback Portal project is a dynamic and interactive platform designed to streamline communication between a company and its diverse clientele. The primary objective of this project is to empower clients to articulate their specific requirements on the portal, fostering a collaborative environment. Each client can submit their unique requests, which are then visible to other clients within the community. One innovative feature of the portal is the upvoting mechanism, allowing clients to endorse and prioritize certain requirements.
 
 This interactive platform serves as a two-way channel, enabling clients to not only express their needs but also gauge the relevance of others' requirements through the upvoting system. The organization closely monitors all posted requirements and is committed to providing timely and tailored responses. This ensures a swift and efficient communication process, enhancing the overall client experience and fostering a sense of community among the clientele. The Feedback Portal ultimately aims to facilitate transparent and effective communication, resulting in a more agile and responsive client-company relationship.
 
-# Key Features
+### Key Features
 - User Authentication and Profiles:
     - User accounts for each client with secure authentication.
     - Client profiles to manage personal information and track their submitted requirements.
@@ -24,7 +24,7 @@ This interactive platform serves as a two-way channel, enabling clients to not o
     - Periodic surveys to gather feedback on the portal's functionality and user experience.
     - Iterative improvements based on client input.
 
-# Technologies Used
+### Technologies Used
 -  Frontend:
      - Framework: React.js for building interactive user interfaces.
      - Styling: CSS, bootstrap.
