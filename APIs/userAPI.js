@@ -128,14 +128,14 @@ userApp.get('/get-posts/:userId',authorize,expressAsynHandler(async(request,resp
     response.send({message:'success',posts:posts,totalUpvotes:totalUpvotes[0].totalUpvotes});
 }));
 
-userApp.get('/get-user/:username',expressAsynHandler(async(request,response) => {
+userApp.get('/get-user/:username',authorize,expressAsynHandler(async(request,response) => {
     let username = request.params.username;
     // console.log(username);
     let user = await userModel.findOne({username:username},{notifications:0,password:0});
     response.send({message:'success',user:user})
 }))
 
-userApp.put('/toggle-notifications',expressAsynHandler(async(request,response) => {
+userApp.put('/toggle-notifications',authorize,expressAsynHandler(async(request,response) => {
     let userId = request.body.userId;
     let changeTo = request.body.changeTo;
     console.log(userId,changeTo);
@@ -145,7 +145,7 @@ userApp.put('/toggle-notifications',expressAsynHandler(async(request,response) =
     else response.send({message:failure});
 }))
 
-userApp.put('/update-email',verifyPassword,expressAsynHandler(async(request,response) => {
+userApp.put('/update-email',authorize,verifyPassword,expressAsynHandler(async(request,response) => {
     
     let newEmail = request.body.newEmail;
     let userId = request.body.userId;
@@ -158,7 +158,7 @@ userApp.put('/update-email',verifyPassword,expressAsynHandler(async(request,resp
 
 }))
 
-userApp.put('/update-password',verifyPassword,expressAsynHandler(async(request,response) => {
+userApp.put('/update-password',authorize,verifyPassword,expressAsynHandler(async(request,response) => {
     
     let userId = request.body.userId;
     let newpassword = request.body.newPassword;
