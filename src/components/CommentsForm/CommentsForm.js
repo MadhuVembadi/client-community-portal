@@ -21,13 +21,14 @@ function CommentsForm(props) {
 
   const postNotification = async (post) =>{
     let d = new Date();
+    console.log("post notification",props.post.user,props.user);
     let notificationObj = {
       postId:post._id,
       type:"comment",
       from:props.userObj[0]._id,
       fromUser:props.userObj[0].username,
-      to: props.post.user ? props.pots.user[0]._id : props.userObj[0]._id,
-      message:`${props.userObj[0].username} has commendted on your post`,
+      to: props.post.user ? props.post.user[0]._id : props.user ? props.user._id : props.userObj[0]._id,
+      message:`${props.userObj[0].username} has commented on your post`,
       status:'unread',
       date:d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()
     }

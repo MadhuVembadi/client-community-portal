@@ -191,27 +191,33 @@ userApp.delete('/delete-account/:userId',expressAsynHandler(async(request,respon
     response.send({message:'success'});
 }))
 
+userApp.post('/send-otp/:username',expressAsynHandler(async (request,response) => {
+    let username = request.params.username;
+    console.log(username);
+    let isExists = await userModel.find({username:username});
+    if(isExists.length == 0) response.send({message:"user not found"});
+    else{
 
-userApp.post('/send-otp',expressAsynHandler(async (request,response) => {
-    console.log(request.body);
-    let otp = getRandomNumber();
-    console.log(typeof otp);
-    const mailOptions = {
-        from: 'vembadi.madhu@gmail.com',
-        to: request.body.to,
-        subject: 'Password change for Change Makers',
-        text: `Your OTP to reset password is ${otp}`
-    };
+        console.log(isExists);
+        let otp = getRandomNumber();
+        console.log(typeof otp);
+        const mailOptions = {
+            from: 'vembadi.madhu@gmail.com',
+            to: isExists[0].email,
+            subject: 'Password change for Change Makers',
+            text: `Your OTP to reset password is ${otp}`
+        };
 
-    let hashedOTP = await bcryptjs.hash(String(otp),6);
-    
-    transporter.sendMail(mailOptions, async (error, info) => {
-        if (error) {
-            response.send({message:"error in sending mail. try again later"})
-        } else {
-            response.send({message:"success",otp:hashedOTP});
-        }
-    });
+        let hashedOTP = await bcryptjs.hash(String(otp),6);
+        
+        transporter.sendMail(mailOptions, async (error, info) => {
+            if (error) {
+                response.send({message:"error in sending mail. try again later"})
+            } else {
+                response.send({message:"success",otp:hashedOTP});
+            }
+        });
+    }
 }))
 
 userApp.post('/verify-otp',verifyPassword,expressAsynHandler(async (request,response) => {

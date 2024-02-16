@@ -187,7 +187,7 @@ function User(props) {
               </Card.Footer>
               <div className='collapse ms-4 me-4' id={`comment-collapse-${post._id}`}>
                   <div>
-                      <CommentsForm post={post} userObj={userObj} setToastMsg={props.setToastMsg} toastOpen={props.toastOpen}/>
+                      <CommentsForm post={post} user={user} userObj={userObj} setToastMsg={props.setToastMsg} toastOpen={props.toastOpen}/>
                       {
                           post.comments.length != 0 &&
                           post.comments.map((comment,idx) => <div className='comment row border-bottom mt-3 pb-2'>

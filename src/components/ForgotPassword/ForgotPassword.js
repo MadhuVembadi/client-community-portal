@@ -13,6 +13,7 @@ function ForgotPassword(props) {
     let {register,handleSubmit,formState:{errors}} = useForm();
 
     const navigate = useNavigate();
+
     const verifyOTP = async (userObj) => {
         let givenOtp = userObj.otp;
         let originalOTP = localStorage.getItem('otp');
@@ -32,33 +33,42 @@ function ForgotPassword(props) {
             verifyOTP(userObj);
             return;
         }
-        let res = await axios.get(`${appLink}/user/get-user/${userObj.username}`)
+        let res = await axios.post(`${appLink}/user/send-otp/${userObj.username}`)
         console.log(res);
-        setOtpShow(true);
-        props.setToastMsg('OTP has been set to registered email id');
-        props.toastOpen();
+        if(res.data.message == 'success'){
+            setOtpShow(true);
+            props.setToastMsg('OTP has been set to registered email id');
+            props.toastOpen();
+    
+            let otpButton = $('.otp-btn');
+            $(otpButton).html("Submit");
 
-        let otpButton = $('.otp-btn');
-        $(otpButton).html("Submit");
-
-        if(res.data.user){
-
-            let res2 = await axios.post(`${appLink}/user/send-otp`,{to:res.data.user.email})
-            console.log(res2);
-            if(res2.data.message == 'success'){
-                localStorage.setItem("otp",res2.data.otp);
-                localStorage.setItem("username",res.data.user.username);
-            }
-            else{
-                props.setToastMsg(res2.data.message);
-                props.toastOpen();
-            }
-
+            localStorage.setItem("otp",res.data.otp);
+            localStorage.setItem("username",userObj.username);
         }
         else{
-            props.setToastMsg('user not found');
+            props.setToastMsg(res.data.message);
             props.toastOpen();
         }
+       
+
+        // if(res.data.user){
+
+        //     let res2 = await axios.post(`${appLink}/user/send-otp`,{to:res.data.user.email})
+        //     console.log(res2);
+        //     if(res2.data.message == 'success'){
+                
+        //     }
+        //     else{
+        //         props.setToastMsg(res2.data.message);
+        //         props.toastOpen();
+        //     }
+
+        // }
+        // else{
+           
+        // }
+
     }
 
     return (
