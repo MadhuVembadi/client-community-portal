@@ -30,7 +30,7 @@ function getRandomNumber() {
 userApp.post('/signup',expressAsynHandler(async (request,response) => {
 
     let newUser = request.body;
-
+    console.log(newUser);
     let alreadyExists = await userModel.find({
         username:newUser.username
     })

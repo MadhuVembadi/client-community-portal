@@ -29,6 +29,7 @@ function Signup(props) {
   }
 
   const onSignup = async (userObj) => {
+    console.log(userObj);
     let res = await axios.post(`${appLink}/user/signup`,userObj)
     let data = res.data;
     console.log(res);
@@ -117,7 +118,7 @@ function Signup(props) {
 
           <div className='col-4'>
             <div className='form-floating'>
-              <select className="form-select" >
+              <select className="form-select" {...register("countrycode",{required:"true"})} >
                 {
                     countries.map((country,idx) => 
                       <option value={country.dial_code} key={idx}>{country.name} {country.dial_code}</option>
