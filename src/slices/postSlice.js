@@ -4,7 +4,7 @@ import {appLink} from '../App'
 
 export const createPost = createAsyncThunk('createPost',async(post,thunkAPI) => {
     
-    let response = await axios.post('${appLink}/post/',post);
+    let response = await axios.post(`${appLink}/post/`,post);
     let data = response.data;
     if(data.message == 'success'){
         return data.post;
