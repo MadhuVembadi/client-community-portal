@@ -81,7 +81,7 @@ postApp.get('/:postId',expressAsyncHandler(async(request,response) => {
 
 postApp.post('/',addItemMiddleware,expressAsyncHandler(async(request,response) => {
   console.log(request.file);
-  let imgURL = "";
+  let imgURL = "none";
   if(request.file != undefined){
     imgURL = await uploadImage({imageName:request.file.filename,imagePath:request.file.path})
     console.log(imgURL);
@@ -153,7 +153,7 @@ postApp.get('/all/:userId',expressAsyncHandler(async(request,response) => {
     //     }
     //   }
     // ])
-    // console.log(documents);
+    console.log(documents);
     response.send({message:'success',feed:documents})
 }))
 

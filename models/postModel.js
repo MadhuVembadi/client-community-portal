@@ -52,10 +52,11 @@ const postSchema = new mongoose.Schema({
     },
     image:{
         type:String,
-        required:true
+        required:true,
+        minLength:0
     },
     datePosted:{
-        type:String,
+        type:Date,
         required:true
     }
 })

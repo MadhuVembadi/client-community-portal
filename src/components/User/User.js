@@ -155,7 +155,7 @@ function User(props) {
               <Card.Body>
                   {/* <Card.Title>Payments options</Card.Title> */}
                   <Card.Text dangerouslySetInnerHTML={{__html:post.post}} />
-                  {post.image != "" && <Card.Img src={post.image} />}
+                  {post.image != "none" && <Card.Img src={post.image} />}
               </Card.Body>
               <Card.Footer className='d-flex justify-content-around'>
                   <div className='post-upvote d-flex align-items-center justify-content-around w-50'>

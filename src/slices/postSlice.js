@@ -6,6 +6,7 @@ export const createPost = createAsyncThunk('createPost',async(post,thunkAPI) => 
     
     let response = await axios.post(`${appLink}/post/`,post);
     let data = response.data;
+    console.log(data);
     if(data.message == 'success'){
         return data.post;
     }
@@ -17,6 +18,7 @@ export const createPost = createAsyncThunk('createPost',async(post,thunkAPI) => 
 export const getPost = createAsyncThunk('getPost',async (post,thunkAPI) => {
     let response = await axios.get(`${appLink}/post/${post.postId}?user=${post.userId}`);
     let data = response.data;
+    console.log(data);
     if(data.message == 'success'){
         return data.post;
     }

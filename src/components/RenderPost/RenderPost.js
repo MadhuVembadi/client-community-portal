@@ -93,7 +93,7 @@ function RenderPost(props) {
             <Card.Body>
                 {/* <Card.Title>Payments options</Card.Title> */}
                 <Card.Text dangerouslySetInnerHTML={{__html:postObj.post}} />
-                {postObj.image != "" && <Card.Img src={postObj.image} />}
+                {postObj.image != "none" && <Card.Img src={postObj.image} />}
             </Card.Body>
             <Card.Footer className='d-flex justify-content-around'>
                 <div className='post-upvote d-flex align-items-center justify-content-around w-25'>
