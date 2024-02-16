@@ -1,35 +1,70 @@
-# Feedback Portal
-### Introduction
-The Feedback Portal project is a dynamic and interactive platform designed to streamline communication between a company and its diverse clientele. The primary objective of this project is to empower clients to articulate their specific requirements on the portal, fostering a collaborative environment. Each client can submit their unique requests, which are then visible to other clients within the community. One innovative feature of the portal is the upvoting mechanism, allowing clients to endorse and prioritize certain requirements.
+# Getting Started with Create React App
 
-This interactive platform serves as a two-way channel, enabling clients to not only express their needs but also gauge the relevance of others' requirements through the upvoting system. The organization closely monitors all posted requirements and is committed to providing timely and tailored responses. This ensures a swift and efficient communication process, enhancing the overall client experience and fostering a sense of community among the clientele. The Feedback Portal ultimately aims to facilitate transparent and effective communication, resulting in a more agile and responsive client-company relationship.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### Key Features
-- User Authentication and Profiles:
-    - User accounts for each client with secure authentication.
-    - Client profiles to manage personal information and track their submitted requirements.
-- Requirement Submission:
-    - User-friendly interface for clients to submit detailed requirements.
-    - Support for multimedia content (text, images, documents) to enhance the clarity of requirements.
-- Upvoting System:
-    - Upvoting mechanism for clients to endorse and prioritize requirements posted by others.
-    - Trending or popular section highlighting the most upvoted requirements.
-- Anonymous Feedback:
-    - Option for clients to submit requirements anonymously, if desired.
-    - Ensures open communication, especially for sensitive or confidential requests.
-- Organization Dashboard:
-    - Dashboard for the organization to view and manage all posted requirements.
-    - Analytics to track trends, identify common needs, and measure client satisfaction.
-- Feedback Surveys:
-    - Periodic surveys to gather feedback on the portal's functionality and user experience.
-    - Iterative improvements based on client input.
+## Available Scripts
 
-### Technologies Used
--  Frontend:
-     - Framework: React.js for building interactive user interfaces.
-     - Styling: CSS, bootstrap.
-     - State Management: Redux for managing state in complex applications.
-- Backend:
-    - Language: Node.js with Express.js for a scalable and efficient server-side application.
-    - Database: MongoDB for storing client data and requirements.
-    - Authentication: JSON Web Tokens (JWT) for secure user authentication.
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

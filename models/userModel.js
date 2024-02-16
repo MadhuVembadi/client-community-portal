@@ -1,0 +1,73 @@
+const mongoose = require('mongoose');
+
+const notificationSchema = new mongoose.Schema({
+    type:{
+        type:String,
+        required:true
+    },
+    from:{
+        type:String,
+        required:true
+    },
+    postId:{
+        type:String,
+        required:true
+    },
+    message:{
+        type:String,
+        required:true
+    },
+    status:{
+        type:String,
+        required:true
+    },
+    date:{
+        type:String,
+        required:true
+    },
+    fromUser:{
+        type:String,
+        required:true
+    }
+})
+const userSchema = new mongoose.Schema({
+    firstname:{
+        type:String,
+        required:true
+    },
+    lastname:{
+        type:String,
+        required:true
+    },
+    email:{
+        type:String,
+        required:true
+    },
+    organisation:{
+        type:String,
+        required:true
+    },
+    countrycode:{
+        type:String,
+        required:true
+    },
+    phone:{
+        type:String,
+        required:true
+    },
+    username:{
+        type:String,
+        required:true
+    },
+    password:{
+        type:String,
+        required:true
+    },
+    notifications:[notificationSchema],
+    emailNotifications:{
+        type:Boolean,
+        required:true
+    }
+})
+
+module.exports = mongoose.model('users',userSchema)

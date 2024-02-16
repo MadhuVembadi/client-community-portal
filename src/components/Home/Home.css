@@ -1,0 +1,60 @@
+.upvote-icon:hover, .upvoted-icon:hover{
+    cursor: pointer;
+}
+
+.upvote-comment:hover{
+    cursor: pointer;
+}
+
+.upvoted-icon{
+    fill:blue;
+}
+
+.collapse{
+    max-height: 500px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+@media (min-width:1000px){
+  .Home .card{
+    width: 50%;
+  }
+}
+@media (min-width:576px) and (max-width:999px){
+  .Home .card{
+    width: 75%;
+  }
+}
+
+@media (min-width:0px) and (max-width:575px){
+  .Home .card{
+    width: 100%;
+  }
+}
+
+.sort-option{
+  position: -webkit-sticky;
+  position: sticky;
+}
+
+/* Define scrollbar styles */
+::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+  
+  /* Track styles (background of the scrollbar) */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the scrollbar track */
+  }
+  
+  /* Handle styles (the draggable part of the scrollbar) */
+  ::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar handle */
+    border-radius: 6px; /* Radius of the scrollbar handle */
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color of the scrollbar handle on hover */
+  }

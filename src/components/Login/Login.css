@@ -1,0 +1,64 @@
+.login{
+    transform: translateY(35%);
+    width: 50%;
+}
+
+.loginForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+label{
+    font-size: 1vw;
+}
+
+@media (min-width:760px) and (max-width:1000px) {
+    .login label{
+        font-size: 1.5vw;
+    }
+    .login button{
+        font-size: 1.5vw !important;
+    }
+    .login{
+        width: 100%;
+        margin: auto;
+    }   
+
+}
+
+@media (min-width:500px) and (max-width:759px){
+    .login h3{
+        font-size: 4vw !important;
+    }
+    .login label{
+        font-size:2vw;
+    } 
+    .login button{
+        font-size:2vw !important;
+    } 
+    .login {
+        width:100%;
+        margin: auto;
+        flex-direction: column-reverse;
+        transform: translateY(10%);
+    }
+}
+
+@media (min-width:0px) and (max-width:500px){
+    .login h3{
+        font-size: 5vw !important;
+    }
+    .login label{
+        font-size:3vw;
+    } 
+    .login button{
+        font-size:3vw !important;
+    } 
+    .login {
+        width:100%;
+        margin: auto;
+        flex-direction: column-reverse;
+        transform: translateY(10%);
+    }
+}

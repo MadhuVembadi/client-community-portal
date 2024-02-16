@@ -1,0 +1,34 @@
+.user-profile-picture img{
+    width: 50%;
+}
+
+.user-profile-info-list{
+    width:25%;
+}
+
+@media (min-width:992px) and (max-width:1500px) {
+    .user-profile-info-list{
+        width:25%;
+    }
+}
+
+@media (min-width:576px) and (max-width:991px) {
+    .user-profile-info-list{
+        width:50%;
+    }
+}
+
+@media (min-width:0px) and (max-width:575px){
+    .user-profile-picture img{
+        width: 25%;
+    }
+    
+    .user-profile-info > *{
+        width: 100% !important;
+        font-size: 3vw;
+        margin-top: 10%;
+    }
+    .user-profile-info{
+        text-align: center;
+    }
+}

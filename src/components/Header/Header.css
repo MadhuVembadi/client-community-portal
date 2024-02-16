@@ -1,0 +1,11 @@
+.nav-link.active svg{
+    color: #0d6efd !important;
+}
+
+.react-tooltip{
+    z-index: 1;
+}
+
+.write-post-btn, .write-post-btn:focus, .write-post-btn:focus-within{
+    border: none;
+}

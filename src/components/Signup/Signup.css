@@ -1,0 +1,92 @@
+.signupcontainer{
+    position: relative;
+}
+
+
+label{
+    font-size: 1vw;
+}
+
+.signupImg{
+    width: 75%;
+    display: block;
+    margin-left: auto;
+}
+
+@media(min-width:1300px) and (max-width:1500px){
+    .signup{
+        width: 50%;
+        position: absolute;
+        bottom: -3.5%;
+        left:16%;
+        background-color: white;
+    }
+}
+
+@media (min-width:1200px) and (max-width:1300px){
+
+    .signup{
+        width: 50%;
+        position: absolute;
+        bottom: -16.5%;
+        left:16%;
+        background-color: white;
+    }
+}
+@media (min-width:1001px) and (max-width:1199px){
+    .signup{
+        width: 50%;
+        position: absolute;
+        bottom: -33.5%;
+        left:16%;
+        background-color: white;
+    }
+}
+
+@media (max-width:1000px) {
+    .signupImg{
+        display: none;
+    }
+}
+@media (min-width:760px) and (max-width:1000px) {
+    .signup label{
+        font-size: 1.5vw;
+    }
+    .signup button{
+        font-size: 1.5vw !important;
+    }
+    .signup{
+        width: 75%;
+        margin: auto;
+    }
+
+}
+
+@media (min-width:500px) and (max-width:759px){
+    .signup label{
+        font-size:2vw;
+    } 
+    .signup button{
+        font-size:2vw !important;
+    } 
+    .signup {
+        width:100%;
+        margin: auto;
+    }
+}
+
+@media (min-width:0px) and (max-width:500px){
+    .signup h3{
+        font-size: 5vw;
+    }
+    .signup label{
+        font-size:3vw;
+    } 
+    .signup button{
+        font-size:3vw !important;
+    } 
+    .signup {
+        width:100%;
+        margin: auto;
+    }
+}
