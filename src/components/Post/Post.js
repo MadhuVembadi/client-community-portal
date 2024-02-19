@@ -75,15 +75,13 @@ function Post(props) {
 
     console.log(formData);
 
-
+    toggleToast('posting...');
     let actionObj = createPost(formData);
     dispatch(actionObj);
-    // toggleToast('posting...');
+    toggleToast('posted');
 
     // let res = await axios.post('http://localhost:3000/post/',formData);
     // console.log(res);
-
-    // toggleToast('posted');
 
   }
 

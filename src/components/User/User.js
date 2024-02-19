@@ -25,6 +25,14 @@ function User(props) {
 
   console.log(props);
 
+  const sendEmail = async (notifyObj) => {
+
+    if(userObj[0].emailNotifications){
+        let res = await axios.post(`${appLink}/notification/send-email`,notifyObj);
+        console.log(res);
+    }
+}
+
   const updateVote = async (op,obj) => {
     let res = await axios.put(`${appLink}/post/${op}`,obj);
     console.log(res);
@@ -42,6 +50,7 @@ function User(props) {
         }
         console.log(notificationObj);
         let res = await axios.put(`${appLink}/notification/`,notificationObj);
+        sendEmail(notificationObj);
         console.log(res);
     }
     fetchPosts();  

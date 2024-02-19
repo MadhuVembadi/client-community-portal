@@ -35,6 +35,13 @@ function Home(props) {
 
     const navigate = useNavigate();
 
+    const sendEmail = async (notifyObj) => {
+
+        if(userObj[0].emailNotifications){
+            let res = await axios.post(`${appLink}/notification/send-email`,notifyObj);
+            console.log(res);
+        }
+    }
     const updateVote = async (op,obj) => {
         console.log(op);
         let res = await axios.put(`${appLink}/post/${op}`,obj);
@@ -49,13 +56,13 @@ function Home(props) {
                 to:obj.postedBy,
                 message:`${userObj[0].username} has upvoted your post`,
                 status:'unread',
-                date:d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()
+                date:d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear(),
             }
             console.log(notificationObj);
             let res = await axios.put(`${appLink}/notification/`,notificationObj);
+            sendEmail(notificationObj);
             console.log(res);
         }
-        
     }
 
     const toggleVote = (postId) => {

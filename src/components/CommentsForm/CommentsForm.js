@@ -13,11 +13,20 @@ import {appLink} from '../../App'
 function CommentsForm(props) {
   let {register,handleSubmit,reset,formState:{errors}} = useForm();
   let {commentObj,isCommentSuccess,isCommentLoading,isCommentError,commentErrMsg} = useSelector(state => state.comment)
+  let {userObj} = useSelector(state => state.user)
   let dispatch = useDispatch();
 
   const isInitial = useRef(true);
 
   console.log(props);
+
+  const sendEmail = async (notifyObj) => {
+
+    if(userObj[0].emailNotifications){
+        let res = await axios.post(`${appLink}/notification/send-email`,notifyObj);
+        console.log(res);
+    }
+  }
 
   const postNotification = async (post) =>{
     let d = new Date();
@@ -34,6 +43,7 @@ function CommentsForm(props) {
     }
     console.log(notificationObj);
     let res = await axios.put(`${appLink}/notification/`,notificationObj);
+    sendEmail(notificationObj);
     console.log(res);
   }
   

@@ -15,9 +15,18 @@ function RenderPost(props) {
     // let [post,setPost] = useState({});
     let {postObj} = useSelector(state => state.post);
     let {userObj} = useSelector(state => state.user);
+    let {isCommentSuccess} = useSelector(state => state.user);
 
     const dispatch = useDispatch();
 
+    const sendEmail = async (notifyObj) => {
+
+        if(userObj[0].emailNotifications){
+            let res = await axios.post(`${appLink}/notification/send-email`,notifyObj);
+            console.log(res);
+        }
+    }
+    
     const updateVote = async (op,obj) => {
         let res = await axios.put(`${appLink}/post/${op}`,obj);
         console.log(res);
@@ -36,6 +45,7 @@ function RenderPost(props) {
             }
             console.log(notificationObj);
             let res = await axios.put(`${appLink}/notification/`,notificationObj);
+            sendEmail(notificationObj)
             console.log(res);
         }  
     }
@@ -53,6 +63,22 @@ function RenderPost(props) {
         console.log(event);
     }
 
+    const fetchPost = async (postId) => {
+        let userId = userObj[0]._id;
+        let obj = {
+          userId:userId,
+          postId:postId
+        }
+        let actionObj = getPost(obj);
+        dispatch(actionObj);
+        // let res = await axios.get(`${appLink}/post/${postId}?user=${userId}`);
+        // console.log(res.data.post);
+        // navigate(`/view?post=${postId}`)
+    }
+
+    useEffect(() => {
+        fetchPost(postObj._id);
+    },[isCommentSuccess])
 
     // const fetchPost = async (postId) => {
     //     let userId = userObj[0]._id;

@@ -5,28 +5,32 @@ const expressAsyncHandler = require('express-async-handler');
 const { default: mongoose } = require('mongoose');
 require('dotenv').config();
 
-notificationApp.put('/',expressAsyncHandler(async(request,response) => {
-    console.log(request.body);
-    let notifyObj = request.body;
-    let res = await userModel.updateOne(
-        {_id:notifyObj.to},
-        {
-            $push:{
-                notifications:{
-                    type:notifyObj.type,
-                    from:notifyObj.from,
-                    postId:notifyObj.postId,
-                    message:notifyObj.message,
-                    status:notifyObj.status,
-                    date:notifyObj.date,
-                    fromUser:notifyObj.fromUser
-                }
-            }
-        }
-    );
-    console.log(res);
-    response.send({message:'success'});
-}));
+
+const { postNotification, markAllRead,sendEmail } = require('./Controllers/notification');
+
+notificationApp.put('/',expressAsyncHandler(postNotification));
+// notificationApp.put('/',expressAsyncHandler(async(request,response) => {
+//     console.log(request.body);
+//     let notifyObj = request.body;
+//     let res = await userModel.updateOne(
+//         {_id:notifyObj.to},
+//         {
+//             $push:{
+//                 notifications:{
+//                     type:notifyObj.type,
+//                     from:notifyObj.from,
+//                     postId:notifyObj.postId,
+//                     message:notifyObj.message,
+//                     status:notifyObj.status,
+//                     date:notifyObj.date,
+//                     fromUser:notifyObj.fromUser
+//                 }
+//             }
+//         }
+//     );
+//     console.log(res);
+//     response.send({message:'success'});
+// }));
 
 notificationApp.get('/:userId',expressAsyncHandler(async(request,response) => {
     let userId = request.params.userId;
@@ -63,17 +67,22 @@ notificationApp.get('/:userId',expressAsyncHandler(async(request,response) => {
     }
 }))
 
-notificationApp.put('/change-status/:userId',expressAsyncHandler(async (request,response) => {
-    let obj = request.params.userId;
-    let res = await userModel.updateOne(
-        {
-            _id:new mongoose.Types.ObjectId(obj)
-        },
-        {
-            $set:{"notifications.$[].status":"read"}
-        }
-    );
-    console.log(res);
-    response.send({message:'success'});
-}))
+
+notificationApp.put('/change-status/:userId',expressAsyncHandler(markAllRead));
+// notificationApp.put('/change-status/:userId',expressAsyncHandler(async (request,response) => {
+//     let obj = request.params.userId;
+//     let res = await userModel.updateOne(
+//         {
+//             _id:new mongoose.Types.ObjectId(obj)
+//         },
+//         {
+//             $set:{"notifications.$[].status":"read"}
+//         }
+//     );
+//     console.log(res);
+//     response.send({message:'success'});
+// }))
+
+notificationApp.post('/send-email',expressAsyncHandler(sendEmail)); 
+
 module.exports = notificationApp;
