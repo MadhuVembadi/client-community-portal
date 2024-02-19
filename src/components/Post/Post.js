@@ -145,7 +145,7 @@ function Post(props) {
             <div className='row mb-3'>
               <img src={ProfileImg} className='col-1 d-block post-profile-img'/>
               <div className='col-10 post-username mb-0 d-flex align-items-center'>
-                <h6 className='mb-0'>Stephen Curry</h6>
+                <h6 className='mb-0'>{userObj[0].username}</h6>
               </div>
             </div>
             <div ref={quillRef} className='border-none'/>
