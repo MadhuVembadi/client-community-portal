@@ -109,20 +109,22 @@ function Notification(props) {
   },[isGetPostSuccess]);
 
   return (
-    <div className='notifications row mt-4'>
-      <div className='col-2 border border-1 rounded-2 shadow p-4'>
+    <div className='notifications row mt-4 d-flex flex-column'>
+      <div className='col-2 w-100 border border-1 rounded-2 shadow p-4'>
           <h6>Filters</h6>
-          <div>
-            <Button variant="none" className='filter-btn selected ps-0' onClick={(event) => applyFilter(event,"all")}>All notifications</Button>
-          </div>
-          <div>
-            <Button variant="none" className="filter-btn ps-0" onClick={(event) => applyFilter(event,"like")}>Upvotes</Button>
-          </div>
-          <div>
-            <Button variant="none" className="filter-btn ps-0" onClick={(event) => applyFilter(event,"comment")}>Comments</Button>
+          <div className='w-100 d-flex justify-content-around'>
+            <div>
+              <Button variant="none" className='filter-btn selected ps-0' onClick={(event) => applyFilter(event,"all")}>All notifications</Button>
+            </div>
+            <div>
+              <Button variant="none" className="filter-btn ps-0" onClick={(event) => applyFilter(event,"like")}>Upvotes</Button>
+            </div>
+            <div>
+              <Button variant="none" className="filter-btn ps-0" onClick={(event) => applyFilter(event,"comment")}>Comments</Button>
+            </div>
           </div>
       </div>
-      <div className='col-10'>
+      <div className='col-10 mt-4 w-75 mx-auto'>
         <div className='d-flex justify-content-between mb-2'>
           <h6 className='d-flex align-items-center mb-0'>Notifications</h6>
           <Button variant='primary' onClick={markAllRead}>Mark all as read</Button>

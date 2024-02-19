@@ -77,101 +77,97 @@ function Header() {
   return (
     <div className='header container'>
         
-        <Navbar expand="md" collapseOnSelect className='bg-light'>
-            <Container>
-                <Navbar.Brand as={NavLink} to="/">Change Makers</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav" className='w-100'>
-                {
-                    !isLoginSuccess &&
-                    
-                    <Nav className="w-100 d-md-flex justify-content-between">
-                        <div>
+        <Navbar className='bg-light'>
+            
+            <Navbar.Brand as={NavLink} to="/">Change Makers</Navbar.Brand>
+            {
+                !isLoginSuccess &&
+                
+                <Nav className="w-100 d-flex justify-content-between">
+                    <div>
+                        <Nav.Item className="m-2">
+                            <Nav.Link eventKey="1" as={NavLink} to="/" >
+                                Home
+                            </Nav.Link>
+                        </Nav.Item>
+                    </div>
+                    <div className='d-flex'>
+                        <Nav.Item className="m-2">
+                            <Nav.Link eventKey="2" as={NavLink} to="/login">
+                                Login
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item className="m-2">
+                            <Nav.Link eventKey="3" as={NavLink} to="/signup">
+                                Signup
+                            </Nav.Link>
+                        </Nav.Item>
+                    </div>
+                </Nav>
+            }
+            {
+                isLoginSuccess  &&
+                <Nav className='w-100'>
+                    <div className='w-100 two-links d-flex justify-content-between'>
+                        <div className='w-100 d-flex'>
                             <Nav.Item className="m-2">
-                                <Nav.Link eventKey="1" as={NavLink} to="/" >
-                                    Home
+                                <Nav.Link eventKey="4" as={NavLink} to="/home" data-tooltip-id="navbar-tooltip-home" data-tooltip-content="home">
+                                    <IoHome color='black' size={25} />
                                 </Nav.Link>
+                                <Tooltip id="navbar-tooltip-home"/>
                             </Nav.Item>
-                        </div>
-                        <div className='d-md-flex'>
-                            <Nav.Item className="m-2">
-                                <Nav.Link eventKey="2" as={NavLink} to="/login">
-                                    Login
-                                </Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item className="m-2">
-                                <Nav.Link eventKey="3" as={NavLink} to="/signup">
-                                    Signup
-                                </Nav.Link>
-                            </Nav.Item>
-                        </div>
-                    </Nav>
-                }
-                {
-                    isLoginSuccess  &&
-                    <Nav className='w-100'>
-                        <div className='w-100 d-md-flex justify-content-between'>
-                            <div className='w-100 d-md-flex'>
-                                <Nav.Item className="m-2">
-                                    <Nav.Link eventKey="4" as={NavLink} to="/home" data-tooltip-id="navbar-tooltip-home" data-tooltip-content="home">
-                                        <IoHome color='black' size={25} />
-                                    </Nav.Link>
-                                    <Tooltip id="navbar-tooltip-home"/>
-                                </Nav.Item>
-                                <Nav.Item className="m-2 d-flex align-items-center">
-                                    <Button variant='none' className="write-post-btn" data-tooltip-id="navbar-tooltip-post" data-tooltip-content="write a post" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                        <PiNotePencilBold color='black' size={25}/>
-                                    </Button>
-                                    <Post setToastMsg={setToastMsg} toastOpen={toastOpen}/>
-                                    <Tooltip id="navbar-tooltip-post"/>
-                                </Nav.Item>
-                                <Nav.Item className="m-2">
-                                    <Nav.Link eventKey="6" as={NavLink} to="/notifications" data-tooltip-id="navbar-tooltip-notify" data-tooltip-content="notificiation">
-                                        <IoNotifications color='black' size={25}/>
-                                    </Nav.Link>
-                                    <Tooltip id="navbar-tooltip-notify"/>
-                                </Nav.Item>
-                                <div className='h-100 d-flex align-items-center'>
-                                    <Form className='d-flex h-50' onSubmit={handleSubmit(onSearchSubmit)}>
-                                        <Form.Control
-                                            type="search"
-                                            placeholder="Search"
-                                            className="me-2"
-                                            aria-label="Search"
-                                            {...register("search",{required:true})}
-                                            />
-                                        <Button type="submit" className='d-flex justify-content-center btn-dark' data-tooltip-id="navbar-tooltip-search" data-tooltip-content="search">
-                                            <IoSearch/>
-                                        </Button>
-                                        <Tooltip id="navbar-tooltip-search"/>
-                                    </Form>
-                                </div>
-                            </div>
-                            
-                            <div className='d-md-flex'>
-                                <Nav.Item className="m-2">
-                                    <Nav.Link eventKey="7" as={NavLink} to="/settings" data-tooltip-id="navbar-tooltip-settings" data-tooltip-content="settings">
-                                        <IoMdSettings color='black' size={25}/>
-                                    </Nav.Link>
-                                    <Tooltip id="navbar-tooltip-settings"/>
-                                </Nav.Item>
-                                <Nav.Item className="m-2">
-                                    <Nav.Link eventKey="8" as={NavLink} to={`/user/${userObj[0].username}`} data-tooltip-id="navbar-tooltip-user" data-tooltip-content="account">
-                                        <FaUser color='black' size={20}/>
-                                    </Nav.Link>
-                                    <Tooltip id="navbar-tooltip-user"/>
-                                </Nav.Item>
-
-                                <Button variant='none' onClick={onUserLogout} className='p-0 m-2' data-tooltip-id="navbar-tooltip-logout" data-tooltip-content="logout" >
-                                    <IoLogOut color="black" size={25}/>
+                            <Nav.Item className="m-2 d-flex align-items-center">
+                                <Button variant='none' className="write-post-btn" data-tooltip-id="navbar-tooltip-post" data-tooltip-content="write a post" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    <PiNotePencilBold color='black' size={25}/>
                                 </Button>
-                                <Tooltip id="navbar-tooltip-logout"/>
+                                <Post setToastMsg={setToastMsg} toastOpen={toastOpen}/>
+                                <Tooltip id="navbar-tooltip-post"/>
+                            </Nav.Item>
+                            <Nav.Item className="m-2">
+                                <Nav.Link eventKey="6" as={NavLink} to="/notifications" data-tooltip-id="navbar-tooltip-notify" data-tooltip-content="notificiation">
+                                    <IoNotifications color='black' size={25}/>
+                                </Nav.Link>
+                                <Tooltip id="navbar-tooltip-notify"/>
+                            </Nav.Item>
+                            <div className='h-100 d-flex align-items-center'>
+                                <Form className='d-flex h-50' onSubmit={handleSubmit(onSearchSubmit)}>
+                                    <Form.Control
+                                        type="search"
+                                        placeholder="Search"
+                                        className="me-2"
+                                        aria-label="Search"
+                                        {...register("search",{required:true})}
+                                        />
+                                    <Button type="submit" className='d-flex justify-content-center align-items-center btn-dark' data-tooltip-id="navbar-tooltip-search" data-tooltip-content="search">
+                                        <IoSearch size={15}/>
+                                    </Button>
+                                    <Tooltip id="navbar-tooltip-search"/>
+                                </Form>
                             </div>
                         </div>
-                    </Nav>       
-                }
-                </Navbar.Collapse>
-            </Container>
+                    
+                        <div className='d-flex user-settings-logout'>
+                            <Nav.Item className="m-2">
+                                <Nav.Link eventKey="7" as={NavLink} to="/settings" data-tooltip-id="navbar-tooltip-settings" data-tooltip-content="settings">
+                                    <IoMdSettings color='black' size={25}/>
+                                </Nav.Link>
+                                <Tooltip id="navbar-tooltip-settings"/>
+                            </Nav.Item>
+                            <Nav.Item className="m-2">
+                                <Nav.Link eventKey="8" as={NavLink} to={`/user/${userObj[0].username}`} data-tooltip-id="navbar-tooltip-user" data-tooltip-content="account">
+                                    <FaUser color='black' size={20}/>
+                                </Nav.Link>
+                                <Tooltip id="navbar-tooltip-user"/>
+                            </Nav.Item>
+
+                            <Button variant='none' onClick={onUserLogout} className='m-2' data-tooltip-id="navbar-tooltip-logout" data-tooltip-content="logout" >
+                                <IoLogOut color="black" size={25}/>
+                            </Button>
+                            <Tooltip id="navbar-tooltip-logout"/>
+                        </div>
+                    </div>
+                </Nav>       
+            }
         </Navbar>
 
         <ToastComponent toastMsg={toastMsg}/>

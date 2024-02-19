@@ -21,15 +21,6 @@ function Home(props) {
     let {isPostSuccess} = useSelector(state => state.post);
     let {isCommentSuccess} = useSelector(state => state.comment);
 
-    // let {register,handleSubmit,formState:{errors}} = useForm();
-
-    // let [upvoteCount,setUpVoteCount] = useState(456);
-
-    // let [comments,setComments] = useState([]);
-
-    // let [open, setOpen] = useState(false);
-
-    // let [upvote,setUpVote] = useState(false);
 
     let [feed,setFeed] = useState([]);
 
@@ -86,8 +77,6 @@ function Home(props) {
         })
         setFeed(newFeed);
 
-        // update in db;
-        
     }
 
     const showComments = (event) => {
@@ -129,10 +118,10 @@ function Home(props) {
                         <img src={ProfileImg} className='col-2 d-block post-profile-img'/>
                         <div className='col d-flex flex-column justify-content-center'>
                             <div className='post-username mb-0'>
-                                <Button variant="none" className='text-primary mb-0' onClick={() => gotoUser(post.user[0].username)}>{post.user[0].username}</Button>
+                                <Button variant="none" className='text-primary mb-0 button-text' onClick={() => gotoUser(post.user[0].username)}>{post.user[0].username}</Button>
                             </div>
                             <div className='post-organisation'>
-                                <Button variant="none" className='text-primary mb-0'>{post.user[0].organisation}</Button>
+                                <Button variant="none" className='text-primary mb-0 button-text'>{post.user[0].organisation}</Button>
                             </div>
                         </div>
                     </Card.Header>
@@ -148,10 +137,10 @@ function Home(props) {
                             {
                                 !post.upvoted ? 
                                 (
-                                    <BiUpvote onClick={() => toggleVote(post._id)} className="upvote-icon"/> 
+                                    <BiUpvote onClick={() => toggleVote(post._id)} size={18} className="upvote-icon"/> 
                                 ):
                                 (
-                                    <BiSolidUpvote onClick={() => toggleVote(post._id)} className="upvoted-icon"/>
+                                    <BiSolidUpvote onClick={() => toggleVote(post._id)} size={18} className="upvoted-icon"/>
                                 )
                             }
                             {
@@ -166,7 +155,7 @@ function Home(props) {
                                 type="button"
                                 className='btn btn-none'
                             >
-                                <FaRegComment onClick={showComments} className='post-comment-icon'/>
+                                <FaRegComment onClick={showComments} size={18} className='post-comment-icon'/>
                             </button>
                             <span className='comment-count'>{post.comments.length}</span>
                         </div> 
@@ -177,12 +166,12 @@ function Home(props) {
                             {
                                 post.comments.length != 0 &&
                                 post.comments.map((comment,idx) => <div className='comment row border-bottom mt-3 pb-2'>
-                                    <div className='comment-profile-icon col-1'>
+                                    <div className='comment-profile-icon col-md-1 col-2'>
                                         <img src={ProfileImg} className='w-100 d-block mx-auto comment-profile-img'/>
                                     </div>
-                                    <div className='col-10'>
+                                    <div className='col-md-11 col-10'>
                                         <div className='comment-profile-username d-flex justify-content-between'>
-                                            <h6>{comment.username}</h6>
+                                        <Button variant="none" className='text-primary mb-0 button-text ps-0' onClick={() => gotoUser(comment.username)}>{comment.username}</Button>
                                             {/* <p>25m ago</p> */}
                                         </div>
                                         <div className='comment-comment'>

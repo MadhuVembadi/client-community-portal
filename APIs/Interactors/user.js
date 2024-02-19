@@ -103,8 +103,9 @@ async function getPostsUser({userId,currUser}){
 }
 
 async function getUser(username) {
-
+    console.log(username);
     let user = await userModel.findOne({username:username},{notifications:0,password:0});
+    console.log(user);
     return {message:'success',user:user}
 }
 

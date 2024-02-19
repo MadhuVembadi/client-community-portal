@@ -21,15 +21,51 @@
     width: 50%;
   }
 }
-@media (min-width:576px) and (max-width:999px){
+@media (min-width:768px) and (max-width:999px){
   .Home .card{
     width: 75%;
   }
+  .button-text{
+    font-size: 1.5vw !important;
+  }
 }
 
-@media (min-width:0px) and (max-width:575px){
+@media (min-width:576px) and (max-width:768px) {
+  .Home .card{
+    width: 75%;
+  }
+  .button-text{
+    font-size: 2vw !important;
+  }
+}
+
+@media (min-width:400px) and (max-width:575px){
   .Home .card{
     width: 100%;
+  }
+  .button-text{
+    font-size: 3vw !important;
+  }
+  .home .post-upvote{
+    width: 50% !important;
+  }
+  .home .post-comments{
+    width: 25% !important;
+  }
+}
+
+@media (min-width:0px) and (max-width:399px){
+  .Home .card{
+    width: 100%;
+  }
+  .button-text{
+    font-size: 3vw !important;
+  }
+  .home .post-upvote{
+    width: 70% !important;
+  }
+  .home .post-comments{
+    width: 25% !important;
   }
 }
 

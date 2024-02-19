@@ -1,6 +1,3 @@
-.signupcontainer{
-    position: relative;
-}
 
 
 label{
@@ -8,18 +5,23 @@ label{
 }
 
 .signupImg{
-    width: 75%;
+    width: 50%;
     display: block;
     margin-left: auto;
 }
 
+/* .signup{
+    
+} */
+
 @media(min-width:1300px) and (max-width:1500px){
     .signup{
         width: 50%;
-        position: absolute;
-        bottom: -3.5%;
-        left:16%;
-        background-color: white;
+        margin: auto;
+        /* position: absolute; */
+        /* bottom: -3.5%; */
+        /* left:16%; */
+        /* background-color: white; */
     }
 }
 
@@ -27,23 +29,25 @@ label{
 
     .signup{
         width: 50%;
-        position: absolute;
+        margin:auto;
+        /* position: absolute;
         bottom: -16.5%;
         left:16%;
-        background-color: white;
+        background-color: white; */
     }
 }
 @media (min-width:1001px) and (max-width:1199px){
     .signup{
         width: 50%;
-        position: absolute;
+        margin:auto;
+        /* position: absolute;
         bottom: -33.5%;
         left:16%;
-        background-color: white;
+        background-color: white; */
     }
 }
 
-@media (max-width:1000px) {
+@media (max-width:768px) {
     .signupImg{
         display: none;
     }

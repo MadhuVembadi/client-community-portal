@@ -34,7 +34,7 @@ function Search(props) {
   return (
     <div className='search mt-5'>
         <h6 className='text-primary'>Users</h6>
-        <div className='w-75 mx-auto'> 
+        <div className='w-75 mx-auto mt-4'> 
             <div className='search-users-list'>
                 {/* <div className='search-user shadow p-4 d-sm-flex mb-3'>
                     <div className='search-user-profile-picture col col-lg-3 col-sm-5 d-flex align-items-center'>

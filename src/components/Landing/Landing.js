@@ -8,11 +8,14 @@ import PeopleSearch from '../../Images/peopleSearch.svg'
 import TeamSpirit from '../../Images/teamSpirit.svg'
 import { IoIosArrowDown } from "react-icons/io";
 import {useNavigate} from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function Landing() {
   let myRef = useRef(null);
   const navigate = useNavigate();
   const executeScroll = () => myRef.current.scrollIntoView();
+
+  let {userObj,isLoginSuccess} = useSelector(state => state.user)
 
   return (
     <div className='landing'>
@@ -66,11 +69,14 @@ function Landing() {
         </div>
       </div>
 
-      <div className='mt-5'>
-          <h3 className='text-center'>Are you ready?</h3>
-          <button className='btn btn-dark d-block mx-auto mt-3 mb-3' onClick={() => navigate('/signup')}>Sign up now</button>
-          <img src={TeamSpirit} className='w-50 d-block mx-auto'/>
-      </div>
+      {
+        !isLoginSuccess &&
+        <div className='mt-5'>
+            <h3 className='text-center'>Are you ready?</h3>
+            <button className='btn btn-dark d-block mx-auto mt-3 mb-3' onClick={() => navigate('/signup')}>Sign up now</button>
+            <img src={TeamSpirit} className='w-50 d-block mx-auto'/>
+        </div>
+      }
     </div>
   )
 }

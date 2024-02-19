@@ -143,8 +143,8 @@ function Post(props) {
           </div>
           <div className="modal-body">
             <div className='row mb-3'>
-              <img src={ProfileImg} className='col-1 d-block post-profile-img'/>
-              <div className='col-10 post-username mb-0 d-flex align-items-center'>
+              <img src={ProfileImg} className='col-md-1 col-2 d-block post-profile-img'/>
+              <div className='col-md-11 col-10 post-username mb-0 d-flex align-items-center'>
                 <h6 className='mb-0'>{userObj[0].username}</h6>
               </div>
             </div>

@@ -9,6 +9,7 @@ import axios from 'axios';
 import $ from 'jquery'
 import { getPost } from '../../slices/postSlice';
 import {appLink} from '../../App'
+import './CommentsForm.css'
 
 function CommentsForm(props) {
   let {register,handleSubmit,reset,formState:{errors}} = useForm();
@@ -91,11 +92,11 @@ function CommentsForm(props) {
   },[isCommentLoading,isCommentSuccess,isCommentError])
 
   return (
-    <div className='d-flex add-comment row p-2 border-bottom border-top border-1 rounded'>
-      <div className='add-comment-profile-icon col-1 d-flex align-items-center'>
+    <div className='commentForm d-flex add-comment row p-2 border-bottom border-top border-1 rounded'>
+      <div className='add-comment-profile-icon col-md-1 col-2 d-flex align-items-center'>
         <img src={ProfileImg} className='w-100 d-block mx-auto comment-profile-img'/>
       </div>
-      <div className='add-comment-input col-11'>
+      <div className='add-comment-input col-md-11 col-10'>
         <form key={props.post._id} id={props.post._id} onSubmit={handleSubmit((data) => postComment(data,props.post))}>
           <textarea className="form-control" name={`comment-text-${props.post._id}`} placeholder='Add a comment...' rows="1" {...register(`comment-text-${props.post._id}`)} />
           <Button type="submit" className='btn d-block ms-auto mt-2' >

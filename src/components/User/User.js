@@ -110,7 +110,9 @@ function User(props) {
   }
 
   const gotoUser = (username) => {
-    navigate(`/user/${username}`)
+    navigate(`/user/${username}`);
+    fetchUser();
+    console.log(user);
   }
 
   useEffect(() => {
@@ -154,7 +156,7 @@ function User(props) {
                   <img src={ProfileImg} className='col-2 d-block post-profile-img'/>
                   <div className='col d-flex flex-column justify-content-center'>
                       <div className='post-username mb-0'>
-                          <h6 className='mb-0'>{user.username}</h6>
+                      <Button variant="none" className='text-primary mb-0 button-text ps-0' onClick={() => gotoUser(user.username)}>{user.username}</Button>
                       </div>
                       <div className='post-organisation'>
                           <p className='mb-0'>{user.organisation}</p>
@@ -205,7 +207,7 @@ function User(props) {
                               </div>
                               <div className='col-10'>
                                   <div className='comment-profile-username d-flex justify-content-between'>
-                                      <h6>{comment.username}</h6>
+                                  <Button variant="none" className='text-primary mb-0 button-text ps-0' onClick={() => gotoUser(comment.username)}>{comment.username}</Button>
                                       {/* <p>25m ago</p> */}
                                   </div>
                                   <div className='comment-comment'>

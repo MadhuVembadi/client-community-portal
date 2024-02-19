@@ -47,10 +47,13 @@ function Login(props) {
 
   return (
     <div>
-      <div className='login row mx-auto border border-2 rounded-3 p-5 '>
+      <div className='login row row-cols-md-2 row-cols-1 mx-auto border border-2 rounded-3 p-5 '>
+        <div className='col d-flex justify-content-center align-items-center mb-4'>
+          <img src={LoginImg} className='w-100 d-block mx-auto '/>
+        </div>
         <div className='col loginForm'>
-        <h3>Login</h3>
-          <form className="mt-3" onSubmit={handleSubmit(onLoginup)}>
+          <h3>Login</h3>
+          <form className="mt-3 mb-2" onSubmit={handleSubmit(onLoginup)}>
               <div className='mb-3'>
                 <div className='form-floating'>
                   <input type="text" className='form-control' id="username" placeholder='username' {
@@ -80,14 +83,10 @@ function Login(props) {
                   <FontAwesomeIcon icon={faArrowRightToBracket} className=" me-2" />Login
                 </Button>
               </div>
-            
           </form>
+          <p>New User? <a href="/signup">signup</a></p>
+          <a href="/forgotPassword">Forgot Password?</a>
         </div>
-        <div className='col d-flex justify-content-center align-items-center'>
-          <img src={LoginImg} className='w-100 d-block mx-auto '/>
-        </div>
-        <p>New User? <a href="/signup">signup</a></p>
-        <a href="/forgotPassword">Forgot Password?</a>
       </div>
       {/* <div className="toast-container position-fixed top-0 end-0 p-3">
         <div id="liveToast-login" className="toast" role="alert" aria-live="assertive" aria-atomic="true">

@@ -9,3 +9,29 @@
 .write-post-btn, .write-post-btn:focus, .write-post-btn:focus-within{
     border: none;
 }
+
+@media(min-width:768px) and (max-width:1500px){
+    .navbar{
+        display: flex !important;
+        flex-direction: row !important;
+    }
+}
+
+
+@media(min-width:0px) and (max-width:767px){
+    .navbar{
+        display: flex !important;
+        flex-direction: column !important;
+    }
+}
+
+@media (min-width:0px) and (max-width:575px){
+    .two-links{
+        display: flex !important;
+        flex-direction: column;
+    }
+    .user-settings-logout{
+        width: 100%;
+        justify-content: center;
+    }
+}
