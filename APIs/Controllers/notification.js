@@ -21,8 +21,16 @@ async function sendEmail(request,response){
     response.send(res);
 }
 
+async function markRead(request,response){
+    let userId = request.body.userId;
+    let notificationId = request.body.notificationId;
+    let res = await notificationInteractor.markRead({userId,notificationId});
+    response.send(res);
+}
+
 module.exports = {
     postNotification,
     markAllRead,
-    sendEmail
+    sendEmail,
+    markRead
 }

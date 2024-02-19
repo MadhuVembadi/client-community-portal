@@ -6,7 +6,7 @@ const { default: mongoose } = require('mongoose');
 require('dotenv').config();
 
 
-const { postNotification, markAllRead,sendEmail } = require('./Controllers/notification');
+const { postNotification, markAllRead,sendEmail,markRead } = require('./Controllers/notification');
 
 notificationApp.put('/',expressAsyncHandler(postNotification));
 // notificationApp.put('/',expressAsyncHandler(async(request,response) => {
@@ -57,12 +57,12 @@ notificationApp.get('/:userId',expressAsyncHandler(async(request,response) => {
             }
         ]
         res = await userModel.aggregate(pipeline);
-        console.log(res);
+        // console.log(res);
         response.send({message:'success',notifications:res.length > 0 ? res[0].notifications : [],present:res.length > 0});
     }
     else{
         res = await userModel.findOne({_id:[userId]})
-        console.log(res);
+        // console.log(res);
         response.send({message:'success',notifications:res.notifications,present:true})
     }
 }))
@@ -84,5 +84,7 @@ notificationApp.put('/change-status/:userId',expressAsyncHandler(markAllRead));
 // }))
 
 notificationApp.post('/send-email',expressAsyncHandler(sendEmail)); 
+
+notificationApp.put('/mark-read',expressAsyncHandler(markRead));
 
 module.exports = notificationApp;

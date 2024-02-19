@@ -20,18 +20,23 @@ async function postNotification(notifyObj){
         {
             $push:{
                 notifications:{
-                    type:notifyObj.type,
-                    from:notifyObj.from,
-                    postId:notifyObj.postId,
-                    message:notifyObj.message,
-                    status:notifyObj.status,
-                    date:notifyObj.date,
-                    fromUser:notifyObj.fromUser
+                    $each:[
+                        {
+                            type:notifyObj.type,
+                            from:notifyObj.from,
+                            postId:notifyObj.postId,
+                            message:notifyObj.message,
+                            status:notifyObj.status,
+                            date:notifyObj.date,
+                            fromUser:notifyObj.fromUser
+                        }
+                    ],
+                    $position:0    
                 }
             }
         }
     );
-
+    console.log(res);
     return {message:'success'};
 }
 
@@ -69,8 +74,46 @@ async function sendEmail(notifyObj){
     }
 }
 
+async function markRead({userId,notificationId}){
+    console.log("hi",notificationId,userId);
+    // let res = await userModel.aggregate([
+    //         {
+    //             $match:{
+    //                 _id:new mongoose.Types.ObjectId(String(userId))
+    //             }
+    //         },
+    //         {
+    //             $unwind:"$notifications"
+    //         },
+    //         {
+    //             $match:{
+    //                 "notifications._id":new mongoose.Types.ObjectId(String(notificationId))
+    //             }
+    //         },
+    //         {
+    //             $set:{
+    //                 "notifications.status":"read"
+    //             }
+    //         }
+    //     ]
+    // )
+
+    let res = await userModel.updateOne(
+        {
+            _id:new mongoose.Types.ObjectId(String(userId)),
+            "notifications._id": new mongoose.Types.ObjectId(String(notificationId))
+        },
+        {  
+            $set: { "notifications.$.status": "read" } 
+        }
+    )
+    console.log("res",res);
+    return {message:"success"};
+}
+
 module.exports = {
     postNotification,
     markAllRead,
-    sendEmail
+    sendEmail,
+    markRead
 }

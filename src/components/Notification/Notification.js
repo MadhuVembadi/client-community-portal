@@ -12,7 +12,7 @@ import axios from 'axios';
 import {getPost,clearPost} from '../../slices/postSlice';
 import {appLink} from '../../App'
 
-function Notification() {
+function Notification(props) {
 
   let {userObj} = useSelector(state => state.user);
   let {postObj,isGetPostSuccess,isGetPostLoading} = useSelector(state => state.post);
@@ -51,6 +51,14 @@ function Notification() {
     let userId = userObj[0]._id;
     let res = await axios.put(`${appLink}/notification/change-status/${userId}`);
     console.log(res);
+    if(res.data.message == 'success'){
+      props.setToastMsg('Marked all as read');
+      props.toastOpen();
+    }
+    else{
+      props.setToastMsg('Failed to mark all as read');
+      props.toastOpen();
+    }
     fetchNotifications(userObj[0]._id,filter);
   }
 
@@ -67,8 +75,16 @@ function Notification() {
         // navigate(`/view?post=${postId}`)
   }
 
-  const renderPost = (postId) => {
+  const markNotificationRead = async (notificationId,userId) => {
+
+    let res = await axios.put(`${appLink}/notification/mark-read`,{notificationId:notificationId,userId:userId});
+    console.log(res);
+    return;
+  }
+
+  const renderPost = (notificationId,postId) => {
     fetchPost(postId);
+    markNotificationRead(notificationId,userObj[0]._id)
   }
 
   const gotoUser = (event,username) => {
@@ -117,7 +133,7 @@ function Notification() {
           {
             notifications.length != 0 &&
             notifications.map((notification,idx) => 
-            <div key={idx} className={`notification w-100 p-4 mb-2 rounded shadow d-flex ${notification.status}`} onClick={() => renderPost(notification.postId)}>
+            <div key={idx} className={`notification w-100 p-4 mb-2 rounded shadow d-flex ${notification.status}`} onClick={() => renderPost(notification._id,notification.postId)}>
               <div className='me-4'>
                 {notification.type == "like" && <BiSolidUpvote color='blue' size={25}/>}
                 {notification.type == "comment" && <FaComment color='blue' size={25}/>}

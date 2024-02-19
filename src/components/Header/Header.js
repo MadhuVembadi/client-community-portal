@@ -184,7 +184,7 @@ function Header() {
                 <Route path="/home" element={<Home setToastMsg={setToastMsg} toastOpen={toastOpen}/>} />
                 <Route path="/post" element={<Post setToastMsg={setToastMsg} toastOpen={toastOpen}/>} />
                 <Route path="/view" element={<RenderPost setToastMsg={setToastMsg} toastOpen={toastOpen}/>} />
-                <Route path="/notifications" element={<Notification/>}/>
+                <Route path="/notifications" element={<Notification setToastMsg={setToastMsg} toastOpen={toastOpen}/>}/>
                 <Route path="/user/:username" element={<User setToastMsg={setToastMsg} toastOpen={toastOpen}/>}/>
                 <Route path="/settings" element={<Settings setToastMsg={setToastMsg} toastOpen={toastOpen} />}/>
                 <Route path="/search" element={<Search setToastMsg={setToastMsg} toastOpen={toastOpen}  search={search}/>}/>
