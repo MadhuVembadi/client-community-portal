@@ -1,3 +1,33 @@
 .search-user:hover{
     cursor: pointer;
 }
+
+
+.search-user-profile-picture img{
+    width:70%;
+}
+
+.search-user-profile-info h4,.search-user-profile-info h6,.search-user-profile-info h5{
+    font-size: 1.3vw;
+}
+
+
+@media (min-width:576px) and (max-width:976px){
+    .search-user-profile-info h4,.search-user-profile-info h6,.search-user-profile-info h5{
+        font-size: 2vw;
+    }
+
+    .search-user-profile-picture img{
+        width:45%;
+    }
+}
+
+@media (min-width:0px) and (max-width:575px){
+    .search-user-profile-picture img{
+        width:25%;
+    }
+    .search-user-profile-info h4,.search-user-profile-info h6,.search-user-profile-info h5{
+        text-align: center;
+        font-size: 2.5vw;
+    }
+}

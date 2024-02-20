@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , useLocation} from 'react-router-dom';
 import ProfileImg from '../../Images/ProfileImg.svg'
 import NoPostsImg from '../../Images/NoPosts.svg'
 import { Button , Card} from 'react-bootstrap';
@@ -10,7 +10,8 @@ import axios from 'axios';
 import CommentsForm from '../CommentsForm/CommentsForm';
 import {BiUpvote,BiSolidUpvote} from 'react-icons/bi';
 import {FaRegComment} from 'react-icons/fa'
-import {appLink} from '../../App'
+import {appLink} from '../../App';
+import $ from 'jquery';
 
 function User(props) {
 
@@ -20,6 +21,8 @@ function User(props) {
   let [posts,setPosts] = useState([]);
   let [user,setUser] = useState({});
   let [totalUpvotes,setTotalUpvotes] = useState(0);
+
+  let location = useLocation();
 
   const navigate = useNavigate();
 
@@ -86,9 +89,6 @@ function User(props) {
       // update in db;
       
   }
-  const showComments = (event) => {
-    console.log(event);
-  }
 
   const fetchPosts = async () => {
     let userId = user._id;
@@ -115,13 +115,28 @@ function User(props) {
     console.log(user);
   }
 
+  const removeOpenCollapses = () => {
+    let collapses = $('.collapse');
+    console.log(collapses.length,collapses);
+
+      Array(collapses).forEach(item => {
+        $(item).removeClass('show');
+      })
+  
+  }
+
+  useEffect(() => {
+    removeOpenCollapses();
+  },[posts,location.pathname])
+
   useEffect(() => {
     fetchPosts();
   },[user,isGetPostSuccess])
 
   useEffect(() => {
+    console.log(location.pathname);
     fetchUser();
-  },[]);
+  },[location.pathname]);
 
   return (
     <div className='user mt-5'>
@@ -173,10 +188,10 @@ function User(props) {
                       {
                           !post.upvoted ? 
                           (
-                              <BiUpvote onClick={() => toggleVote(post)} className="upvote-icon"/> 
+                              <BiUpvote onClick={() => toggleVote(post)} size={18} className="upvote-icon"/> 
                           ):
                           (
-                              <BiSolidUpvote onClick={() => toggleVote(post)} className="upvoted-icon"/>
+                              <BiSolidUpvote onClick={() => toggleVote(post)} size={18} className="upvoted-icon"/>
                           )
                       }
                       {
@@ -191,23 +206,30 @@ function User(props) {
                           type="button"
                           className='btn btn-none'
                       >
-                          <FaRegComment onClick={showComments} className='post-comment-icon'/>
+                          <FaRegComment className='post-comment-icon' size={18}/>
                       </button>
                       <span className='comment-count'>{post.comments.length}</span>
                   </div> 
               </Card.Footer>
-              <div className='collapse ms-4 me-4' id={`comment-collapse-${post._id}`}>
+              <div className='collapse ms-4 me-4' id={`comment-collapse-${post._id}`} >
                   <div>
                       <CommentsForm post={post} user={user} userObj={userObj} setToastMsg={props.setToastMsg} toastOpen={props.toastOpen}/>
                       {
                           post.comments.length != 0 &&
                           post.comments.map((comment,idx) => <div className='comment row border-bottom mt-3 pb-2'>
-                              <div className='comment-profile-icon col-1'>
+                              <div className='comment-profile-icon col-2'>
                                   <img src={ProfileImg} className='w-100 d-block mx-auto comment-profile-img'/>
                               </div>
-                              <div className='col-10'>
+                              <div className=' col-10'>
                                   <div className='comment-profile-username d-flex justify-content-between'>
-                                  <Button variant="none" className='text-primary mb-0 button-text ps-0' onClick={() => gotoUser(comment.username)}>{comment.username}</Button>
+                                    <Button variant="none" className='text-primary mb-0 button-text ps-0' 
+                                      onClick={() => gotoUser(comment.username)}
+                                      // data-bs-toggle="collapse"
+                                      // data-bs-target={`#comment-collapse-${post._id}`}
+                                      // type="button"
+                                    >
+                                      {comment.username}
+                                    </Button>
                                       {/* <p>25m ago</p> */}
                                   </div>
                                   <div className='comment-comment'>

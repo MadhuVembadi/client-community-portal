@@ -33,32 +33,32 @@ function Search(props) {
 
   return (
     <div className='search mt-5'>
-        <h6 className='text-primary'>Users</h6>
-        <div className='w-75 mx-auto mt-4'> 
-            <div className='search-users-list'>
-                {/* <div className='search-user shadow p-4 d-sm-flex mb-3'>
-                    <div className='search-user-profile-picture col col-lg-3 col-sm-5 d-flex align-items-center'>
-                        <img src={ProfileImg} className='w-50 d-block mx-auto'/>
+        <h6 className='text-dark'>Users</h6>
+        <div className='w-100 mx-auto mt-4'> 
+            <div className='search-users-list row row-cols-lg-2 row-cols-1 d-flex justify-content-between'>
+                {/* <div className='search-user shadow p-4 d-sm-flex mb-3' onClick={() => goToUser(user)}>
+                    <div className='search-user-profile-picture col col-lg-3 col-sm-5 d-flex align-items-center mb-3'>
+                        <img src={ProfileImg} className="d-block mx-auto"/>
                     </div>
-                    <div className='search-user-profile-info col col-lg-9 col-sm-7 d-flex flex-column justify-content-around'>
+                    <div className='search-user-profile-info col col-lg-9 col-sm-7 d-flex flex-column justify-content-center'>
                         <div>
-                            <h4>Madhu Vembadi</h4>
-                            <h6 className='text-primary'>@madhu.vembadi</h6>
+                            <h4>{user.firstname} {user.lastname}</h4>
+                            <h6 className='text-primary'>{user.firstname} {user.lastname}</h6>
                         </div>
-                        <h5>Darwinbox</h5>
+                        <h5>{user.organisation}</h5>
                     </div>
                 </div> */}
                 {
                     users.length != 0 && 
                     users.map(user => 
-                        <div className='search-user shadow p-4 d-sm-flex mb-3' onClick={() => goToUser(user)} >
-                            <div className='search-user-profile-picture col col-lg-3 col-sm-5 d-flex align-items-center'>
-                                <img src={ProfileImg} className='w-50 d-block mx-auto'/>
+                        <div className='search-user shadow p-4 d-sm-flex mb-3 col col-lg-5' onClick={() => goToUser(user)}>
+                            <div className='search-user-profile-picture col col-lg-3 col-sm-5 d-flex align-items-center mb-3'>
+                                <img src={ProfileImg} className="d-block mx-auto"/>
                             </div>
-                            <div className='search-user-profile-info col col-lg-9 col-sm-7 d-flex flex-column justify-content-around'>
+                            <div className='search-user-profile-info col col-lg-9 col-sm-7 d-flex flex-column justify-content-center'>
                                 <div>
                                     <h4>{user.firstname} {user.lastname}</h4>
-                                    <h6 className='text-primary'>@{user.username}</h6>
+                                    <h6 className='text-primary'>{user.firstname} {user.lastname}</h6>
                                 </div>
                                 <h5>{user.organisation}</h5>
                             </div>
