@@ -94,7 +94,19 @@ async function dislikePost(obj) {
 }
 
 async function commentPost(obj,commentObj) {
-    let res = await postModel.updateOne({_id:obj.postId},{$push:{comments:commentObj}});
+    let res = await postModel.updateOne(
+      {
+        _id:obj.postId
+      },
+      {
+        $push:{
+          comments:{
+            $each:[commentObj],
+            $position:0
+          }
+        }
+      }
+    );
     // console.log(res);
     if(res.modifiedCount == 1) return {message:'success',comment:commentObj}
     else return {message:'failure'}

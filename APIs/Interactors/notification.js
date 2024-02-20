@@ -56,15 +56,15 @@ async function markAllRead(obj) {
 async function sendEmail(notifyObj){
     // console.log(notifyObj);
     
-    let toEmail = await userModel.findOne({_id:notifyObj.to},{email:1});
+    let toEmail = await userModel.findOne({_id:notifyObj.to},{email:1,emailNotifications:1});
+    if(toEmail.emailNotifications == false) return {message:"email notification turned off"};
     // console.log(toEmail);
     const mailOptions = {
         from: process.env.MAILID,
-        to: toEmail ,
+        to: toEmail.email ,
         subject: 'New interactions to your post',
         text: notifyObj.message
     };
-
     try{
         let res = await transporter.sendMail(mailOptions);
         return {message:"success"}

@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.9ce85fec.css",
-    "main.js": "/static/js/main.85aa183f.js",
+    "main.css": "/static/css/main.29dea3e0.css",
+    "main.js": "/static/js/main.23509728.js",
     "static/js/592.cab54802.chunk.js": "/static/js/592.cab54802.chunk.js",
     "static/media/teamSpirit.svg": "/static/media/teamSpirit.cf2edc2a300cb5dffacd8119cafdf083.svg",
     "static/media/peopleSearch.svg": "/static/media/peopleSearch.206271bc1aa6cfdbab0f11ea4a11913b.svg",
@@ -17,12 +17,12 @@
     "static/media/ProfileImg.svg": "/static/media/ProfileImg.fa7845edcd17a14cddabc30bcc7c6b26.svg",
     "static/media/logo.svg": "/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/index.html",
-    "main.9ce85fec.css.map": "/static/css/main.9ce85fec.css.map",
-    "main.85aa183f.js.map": "/static/js/main.85aa183f.js.map",
+    "main.29dea3e0.css.map": "/static/css/main.29dea3e0.css.map",
+    "main.23509728.js.map": "/static/js/main.23509728.js.map",
     "592.cab54802.chunk.js.map": "/static/js/592.cab54802.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9ce85fec.css",
-    "static/js/main.85aa183f.js"
+    "static/css/main.29dea3e0.css",
+    "static/js/main.23509728.js"
   ]
 }

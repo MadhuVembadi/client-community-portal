@@ -58,7 +58,7 @@ function Search(props) {
                             <div className='search-user-profile-info col col-lg-9 col-sm-7 d-flex flex-column justify-content-center'>
                                 <div>
                                     <h4>{user.firstname} {user.lastname}</h4>
-                                    <h6 className='text-primary'>{user.firstname} {user.lastname}</h6>
+                                    <h6 className='text-primary'>@{user.username}</h6>
                                 </div>
                                 <h5>{user.organisation}</h5>
                             </div>

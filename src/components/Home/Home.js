@@ -28,10 +28,9 @@ function Home(props) {
 
     const sendEmail = async (notifyObj) => {
 
-        if(userObj[0].emailNotifications){
-            let res = await axios.post(`${appLink}/notification/send-email`,notifyObj);
-            console.log(res);
-        }
+        let res = await axios.post(`${appLink}/notification/send-email`,notifyObj);
+        console.log(res);
+        
     }
     const updateVote = async (op,obj) => {
         console.log(op);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React,{useEffect,useState} from 'react'
-import {Card} from 'react-bootstrap'
+import {Card,Button} from 'react-bootstrap'
 import { useSelector,useDispatch } from 'react-redux';
 import ProfileImg from '../../Images/ProfileImg.svg'
 import {BiUpvote,BiSolidUpvote} from 'react-icons/bi'
@@ -9,6 +9,7 @@ import CommentsForm from '../CommentsForm/CommentsForm';
 import './RenderPost.css'
 import { getPost } from '../../slices/postSlice';
 import { appLink} from '../../App'
+import { useNavigate } from 'react-router-dom';
 
 function RenderPost(props) {
 
@@ -18,13 +19,13 @@ function RenderPost(props) {
     let {isCommentSuccess} = useSelector(state => state.user);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const sendEmail = async (notifyObj) => {
 
-        if(userObj[0].emailNotifications){
-            let res = await axios.post(`${appLink}/notification/send-email`,notifyObj);
-            console.log(res);
-        }
+        let res = await axios.post(`${appLink}/notification/send-email`,notifyObj);
+        console.log(res);
+        
     }
     
     const updateVote = async (op,obj) => {
@@ -61,6 +62,10 @@ function RenderPost(props) {
 
     const showComments = (event) => {
         console.log(event);
+    }
+
+    const gotoUser = (username) => {
+        navigate(`/user/${username}`)
     }
 
     const fetchPost = async (postId) => {
@@ -102,14 +107,14 @@ function RenderPost(props) {
     // },[])
 
   return (
-    <div className='post-view d-flex justify-content-between w-75 mx-auto h-100 align-items-center mt-5'>
+    <div className='post-view mt-5'>
     
         <Card className='m-2 post-view-card'>
             <Card.Header className='row'>
                 <img src={ProfileImg} className='col-2 d-block post-profile-img'/>
                 <div className='col d-flex flex-column justify-content-center'>
                     <div className='post-username mb-0'>
-                        <h6 className='mb-0'>{postObj.user[0].username}</h6>
+                    <Button variant="none" className='text-primary mb-0 button-text ps-0' onClick={() => gotoUser(postObj.user[0].username)}>{postObj.user[0].username}</Button>
                     </div>
                     <div className='post-organisation'>
                         <p className='mb-0'>{postObj.user[0].organisation}</p>
@@ -126,10 +131,10 @@ function RenderPost(props) {
                     {
                         !postObj.upvoted ? 
                         (
-                            <BiUpvote onClick={() => toggleVote(postObj._id)} className="upvote-icon"/> 
+                            <BiUpvote onClick={() => toggleVote(postObj._id)} size={18} className="upvote-icon"/> 
                         ):
                         (
-                            <BiSolidUpvote onClick={() => toggleVote(postObj._id)} className="upvoted-icon"/>
+                            <BiSolidUpvote onClick={() => toggleVote(postObj._id)} size={18} className="upvoted-icon"/>
                         )
                     }
                     {
@@ -138,7 +143,7 @@ function RenderPost(props) {
                     <span className='upvote-count'>{postObj.upvotesCount}</span>
                 </div>
                 <div className='post-comments d-flex align-items-center justify-content-center w-25'>
-                    <FaRegComment onClick={showComments} className='post-comment-icon'/>
+                    <FaRegComment onClick={showComments} size={18} className='post-comment-icon me-2'/>
                     <span className='comment-count'>{postObj.comments.length}</span>
                 </div> 
             </Card.Footer>
@@ -148,12 +153,12 @@ function RenderPost(props) {
                 {
                     postObj.comments.length != 0 &&
                     postObj.comments.map((comment,idx) => <div className='comment row border-bottom mt-3 pb-2'>
-                        <div className='comment-profile-icon col-1'>
+                        <div className='comment-profile-icon col-2'>
                             <img src={ProfileImg} className='w-100 d-block mx-auto comment-profile-img'/>
                         </div>
                         <div className='col-10'>
                             <div className='comment-profile-username d-flex justify-content-between'>
-                                <h6>{comment.username}</h6>
+                            <Button variant="none" className='text-primary mb-0 button-text ps-0' onClick={() => gotoUser(comment.username)}>{comment.username}</Button>
                                 {/* <p>25m ago</p> */}
                             </div>
                             <div className='comment-comment'>
