@@ -10,6 +10,7 @@ import {useNavigate, userNavigate} from 'react-router-dom'
 import axios from 'axios'
 import {Toast} from 'bootstrap';
 import {appLink} from '../../App'
+import { IoIosInformationCircleOutline } from "react-icons/io";
 
 function Signup(props) {
 
@@ -22,6 +23,8 @@ function Signup(props) {
   const usernamePattern = /^[a-z]+(?:[._]+?[a-z0-9]+)*[a-z0-9]$/;
 
   const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{7,15}$/;
+
+  const phonePattern = /^\d{10}$/;
   
   const fetchCountries = async () => {
     let res = getCountries();
@@ -136,11 +139,21 @@ function Signup(props) {
               
               <div className='form-floating'>
                 <input type="text" className='form-control' id="phone" placeholder='Phone' {
-                      ...register("phone",{required:true})
+                      ...register("phone", {
+                          required:true,
+                          pattern:{
+                            value:phonePattern,
+                            message:'Invalid phone number'
+                          },
+                          validate:(value) => phonePattern.test(value)
+                        })
                   }/>
                 <label htmlFor="phone">Phone</label>
                 {
-                  errors.phone && <p className='text-danger text-start'>*required</p>
+                  errors.phone?.type == "required" && <p className='text-danger text-start'>*required</p>
+                }
+                {
+                  errors.phone && <p className='text-danger text-start'>{errors.phone.message}</p>
                 }
               </div>
               
@@ -166,7 +179,7 @@ function Signup(props) {
                 {
                   errors.username && <p className='text-danger text-start'>{errors.username.message}</p>
                 }
-                
+                <p className='form-text'>only lowercase letters, digits,period and an underscore are allowed</p>
               </div>
           </div>
             
@@ -189,6 +202,7 @@ function Signup(props) {
                 {
                   errors.password && <p className='text-danger text-start'>{errors.password.message}</p>
                 }
+                <p className='form-text'>Atleast one special character, one capital case and a digit. <br/>Min of 7 and max of 15 characters</p>
               </div>
           </div>
           
