@@ -51,7 +51,8 @@ async function postComment(request,response) {
         comment:obj.comment,
         userId:obj.userId,
         username:obj.username,
-        datePosted:new Date()
+        datePosted:new Date(),
+        fromProfilePicture:obj.fromProfilePicture
     }
     let res = await postInteractor.commentPost(obj,commentObj);
     response.send(res);

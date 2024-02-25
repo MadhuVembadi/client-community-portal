@@ -114,7 +114,7 @@ function Home(props) {
                 feed.length != 0 && feed.map((post,idx) => 
                 <Card className='mx-auto mb-3'>
                     <Card.Header className='row'>
-                        <img src={ProfileImg} className='col-2 d-block post-profile-img'/>
+                        <img src={post.user[0].profilePicture} className='col-2 d-block post-profile-img'/>
                         <div className='col d-flex flex-column justify-content-center'>
                             <div className='post-username mb-0'>
                                 <Button variant="none" className='text-primary mb-0 button-text' onClick={() => gotoUser(post.user[0].username)}>{post.user[0].username}</Button>
@@ -166,11 +166,11 @@ function Home(props) {
                                 post.comments.length != 0 &&
                                 post.comments.map((comment,idx) => <div className='comment row border-bottom mt-3 pb-2'>
                                     <div className='comment-profile-icon col-md-1 col-2'>
-                                        <img src={ProfileImg} className='w-100 d-block mx-auto comment-profile-img'/>
+                                        <img src={comment.commentUser[0].profilePicture} className='w-100 d-block mx-auto comment-profile-img'/>
                                     </div>
                                     <div className='col-md-11 col-10'>
                                         <div className='comment-profile-username d-flex justify-content-between'>
-                                        <Button variant="none" className='text-primary mb-0 button-text ps-0' onClick={() => gotoUser(comment.username)}>{comment.username}</Button>
+                                        <Button variant="none" className='text-primary mb-0 button-text ps-0' onClick={() => gotoUser(comment.commentUser[0].username)}>{comment.commentUser[0].username}</Button>
                                             {/* <p>25m ago</p> */}
                                         </div>
                                         <div className='comment-comment'>
@@ -183,55 +183,6 @@ function Home(props) {
                                 post.comments.length == 0 && 
                                 <p>No comments</p>
                             }
-                            
-                            {/* <div className='comment row border-bottom mt-3 pb-2'>
-                                <div className='comment-profile-icon col-1'>
-                                    <img src={ProfileImg} className='w-100 d-block mx-auto comment-profile-img'/>
-                                </div>
-                                <div className='col-10'>
-                                    <div className='comment-profile-username d-flex justify-content-between'>
-                                        <h6>Stephen Curry</h6>
-                                        <p>25m ago</p>
-                                    </div>
-                                    <div className='comment-comment'>
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-                                        terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
-                                        labore wes anderson cred nesciunt sapiente ea proident.
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='comment row border-bottom mt-3 pb-2'>
-                                <div className='comment-profile-icon col-1'>
-                                    <img src={ProfileImg} className='w-100 d-block mx-auto comment-profile-img'/>
-                                </div>
-                                <div className='col-10'>
-                                    <div className='comment-profile-username d-flex justify-content-between'>
-                                        <h6>Stephen Curry</h6>
-                                        <p>25m ago</p>
-                                    </div>
-                                    <div className='comment-comment'>
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-                                        terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
-                                        labore wes anderson cred nesciunt sapiente ea proident.
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='comment row border-bottom mt-3 pb-2'>
-                                <div className='comment-profile-icon col-1'>
-                                    <img src={ProfileImg} className='w-100 d-block mx-auto comment-profile-img'/>
-                                </div>
-                                <div className='col-10'>
-                                    <div className='comment-profile-username d-flex justify-content-between'>
-                                        <h6>Stephen Curry</h6>
-                                        <p>25m ago</p>
-                                    </div>
-                                    <div className='comment-comment'>
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-                                        terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
-                                        labore wes anderson cred nesciunt sapiente ea proident.
-                                    </div>
-                                </div>
-                            </div> */}
                         </div>
                     </div>
                 </Card>

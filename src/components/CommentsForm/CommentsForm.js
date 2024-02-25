@@ -23,10 +23,8 @@ function CommentsForm(props) {
 
   const sendEmail = async (notifyObj) => {
 
-    if(userObj[0].emailNotifications){
-        let res = await axios.post(`${appLink}/notification/send-email`,notifyObj);
-        console.log(res);
-    }
+      let res = await axios.post(`${appLink}/notification/send-email`,notifyObj);
+      console.log(res);
   }
 
   const postNotification = async (post) =>{
@@ -52,8 +50,9 @@ function CommentsForm(props) {
     let obj = {
       comment:comment[`comment-text-${post._id}`],
       postId:post._id,
-      userId:post.userId,
-      username:props.userObj[0].username
+      userId:props.userObj[0]._id,
+      username:props.userObj[0].username,
+      fromProfilePicture:userObj[0].profilePicture
     }
     console.log(obj);
     let actionObj = createComment(obj);
@@ -94,7 +93,7 @@ function CommentsForm(props) {
   return (
     <div className='commentForm d-flex add-comment row p-2 border-bottom border-top border-1 rounded'>
       <div className='add-comment-profile-icon col-md-1 col-2 d-flex align-items-center'>
-        <img src={ProfileImg} className='w-100 d-block mx-auto comment-profile-img'/>
+        <img src={userObj[0].profilePicture} className='w-100 d-block mx-auto comment-profile-img'/>
       </div>
       <div className='add-comment-input col-md-11 col-10'>
         <form key={props.post._id} id={props.post._id} onSubmit={handleSubmit((data) => postComment(data,props.post))}>

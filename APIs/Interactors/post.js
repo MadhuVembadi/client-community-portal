@@ -29,7 +29,61 @@ async function getPost({postId,userId}){
               }
             }
           }
-        }
+        },
+        {
+          $unwind:{ 
+            path:"$comments",
+            preserveNullAndEmptyArrays:true
+          }
+        },       
+        {
+          $lookup: {
+              from: "users",
+              let:{userIdStr : "$comments.userId"},
+              pipeline:[
+                {
+                  $match:{
+                    $expr:{
+                      $eq:[
+                        {$toString: "$_id"},
+                        "$$userIdStr"
+                      ]
+                    }
+                  }
+                }
+              ],   
+              // localField: "comments.username",
+              // foreignField: "username",
+              as: "comments.commentUser"
+          }
+        },
+        {
+          $addFields: {
+            "comments": {
+              $cond: {
+                if: { $eq: ["$comments", { commentUser: []}] }, 
+                then: "$REMOVE", 
+                else: "$comments"
+              }
+            }
+          }
+        },        
+        {
+          $group:{
+            _id:"$_id",
+            "comments":{
+              $push:"$comments"
+            },
+            "userId":{$first:"$userId"},
+            "post":{$first:"$post"},
+            "upvotes":{$first:"$upvotes"},
+            "upvotesCount":{$first:"$upvotesCount"},
+            "image":{$first:"$image"},
+            "datePosted":{$first:"$datePosted"},
+            "user":{$first:"$user"},
+            "upvoted":{$first:"$upvoted"}
+          }
+        },
       ])
       return {message:'success',post:post[0]};
 }
@@ -64,10 +118,64 @@ async function getAllPosts ({loggedinUser,filter}) {
           }
         },
         {
+          $unwind:{ 
+            path:"$comments",
+            preserveNullAndEmptyArrays:true
+          }
+        },       
+        {
+          $lookup: {
+              from: "users",
+              let:{userIdStr : "$comments.userId"},
+              pipeline:[
+                {
+                  $match:{
+                    $expr:{
+                      $eq:[
+                        {$toString: "$_id"},
+                        "$$userIdStr"
+                      ]
+                    }
+                  }
+                }
+              ],   
+              // localField: "comments.username",
+              // foreignField: "username",
+              as: "comments.commentUser"
+          }
+        },
+        {
+          $addFields: {
+            "comments": {
+              $cond: {
+                if: { $eq: ["$comments", { commentUser: []}] }, 
+                then: "$REMOVE", 
+                else: "$comments"
+              }
+            }
+          }
+        },        
+        {
+          $group:{
+            _id:"$_id",
+            "comments":{
+              $push:"$comments"
+            },
+            "userId":{$first:"$userId"},
+            "post":{$first:"$post"},
+            "upvotes":{$first:"$upvotes"},
+            "upvotesCount":{$first:"$upvotesCount"},
+            "image":{$first:"$image"},
+            "datePosted":{$first:"$datePosted"},
+            "user":{$first:"$user"},
+            "upvoted":{$first:"$upvoted"}
+          }
+        },
+        {
           $sort:{
             [filter]:-1
           }
-        }
+        },
       ]
       let documents = await postModel.aggregate(pipeline);
       return {message:'success',feed:documents};
@@ -94,6 +202,7 @@ async function dislikePost(obj) {
 }
 
 async function commentPost(obj,commentObj) {
+    console.log(commentObj);
     let res = await postModel.updateOne(
       {
         _id:obj.postId

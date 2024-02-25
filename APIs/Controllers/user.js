@@ -1,4 +1,5 @@
 const userInteractor = require('../Interactors/user');
+const uploadImage = require('../Middlewares/s3upload').uploadImage;
 
 async function userSignup(request,response) {
 
@@ -98,6 +99,28 @@ async function sendOTP(request,response) {
     response.send(res);
 }
 
+async function updateProfilePicture(request,response){
+    let imgURL = "";
+    if(request.file != undefined){
+        imgURL = await uploadImage({imageName:request.file.filename,imagePath:request.file.path});
+    }
+    // let obj = {
+    //     imgURL : imgURL,
+    //     userId:request.body.userId,
+    //     username:request.body.username
+    // };
+    let res = {message:"no changes"}
+    if(imgURL != "")
+        res = await userInteractor.updateProfilePicture({userId:request.body.userId,imgURL:imgURL});
+    response.send(res);
+}
+
+async function updateUsername(request,response){
+    let obj = request.body;
+    let res = await userInteractor.updateProfileUsername(obj);
+    response.send(res);
+}
+
 module.exports = {
     userSignup,
     userLogin,
@@ -109,5 +132,7 @@ module.exports = {
     updatePassword,
     forgotUpdate,
     deleteAccount,
-    sendOTP
+    sendOTP,
+    updateUsername,
+    updateProfilePicture
 }

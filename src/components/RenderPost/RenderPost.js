@@ -83,6 +83,7 @@ function RenderPost(props) {
 
     useEffect(() => {
         fetchPost(postObj._id);
+        console.log("post fetched after comment success");
     },[isCommentSuccess])
 
     // const fetchPost = async (postId) => {
@@ -111,7 +112,7 @@ function RenderPost(props) {
     
         <Card className='m-2 post-view-card'>
             <Card.Header className='row'>
-                <img src={ProfileImg} className='col-2 d-block post-profile-img'/>
+                <img src={postObj.user[0].profilePicture} className='col-2 d-block post-profile-img'/>
                 <div className='col d-flex flex-column justify-content-center'>
                     <div className='post-username mb-0'>
                     <Button variant="none" className='text-primary mb-0 button-text ps-0' onClick={() => gotoUser(postObj.user[0].username)}>{postObj.user[0].username}</Button>
@@ -154,11 +155,11 @@ function RenderPost(props) {
                     postObj.comments.length != 0 &&
                     postObj.comments.map((comment,idx) => <div className='comment row border-bottom mt-3 pb-2'>
                         <div className='comment-profile-icon col-2'>
-                            <img src={ProfileImg} className='w-100 d-block mx-auto comment-profile-img'/>
+                            <img src={comment.commentUser[0].profilePicture} className='w-100 d-block mx-auto comment-profile-img'/>
                         </div>
                         <div className='col-10'>
                             <div className='comment-profile-username d-flex justify-content-between'>
-                            <Button variant="none" className='text-primary mb-0 button-text ps-0' onClick={() => gotoUser(comment.username)}>{comment.username}</Button>
+                            <Button variant="none" className='text-primary mb-0 button-text ps-0' onClick={() => gotoUser(comment.commentUser[0].username)}>{comment.commentUser[0].username}</Button>
                                 {/* <p>25m ago</p> */}
                             </div>
                             <div className='comment-comment'>

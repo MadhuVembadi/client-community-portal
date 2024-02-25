@@ -5,6 +5,8 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.509.0",
     "@aws-sdk/lib-storage": "^3.509.0",
+    "@dicebear/collection": "^7.0.4",
+    "@dicebear/core": "^7.0.4",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/material": "^5.15.9",
@@ -22,6 +24,7 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "country-state-picker": "^1.1.5",
+    "dicebear": "^7.0.4",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "formidable": "^3.5.1",
@@ -58,7 +61,7 @@
     "build": "react-scripts build",
     "test": "mocha --watch",
     "eject": "react-scripts eject",
-    "coverage":"nyc --reporter=text npm test"
+    "coverage": "nyc --reporter=text npm test"
   },
   "eslintConfig": {
     "extends": [

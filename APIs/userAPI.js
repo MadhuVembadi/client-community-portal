@@ -9,6 +9,7 @@ const { default: mongoose } = require('mongoose');
 const verifyPassword = require('./Middlewares/verifyPassword')
 const nodemailer = require('nodemailer');
 const authorize = require('./Middlewares/authorize').authorize;
+const addItemMiddleware = require('./Middlewares/multerMiddleware').addItemMiddleware
 
 const {
     userSignup,
@@ -21,7 +22,9 @@ const {
     updatePassword,
     forgotUpdate,
     deleteAccount,
-    sendOTP
+    sendOTP,
+    updateUsername,
+    updateProfilePicture
 } = require('../APIs/Controllers/user');
 
 require('dotenv').config()
@@ -247,5 +250,9 @@ userApp.post('/send-otp/:username',expressAsynHandler(sendOTP));
 userApp.post('/verify-otp',verifyPassword,expressAsynHandler(async (request,response) => {
     response.send('success');
 }))
+
+userApp.put('/update-username',verifyPassword,expressAsynHandler(updateUsername));
+
+userApp.put('/update-profile-picture',authorize,addItemMiddleware,expressAsynHandler(updateProfilePicture));
 
 module.exports = userApp;

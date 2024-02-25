@@ -11,6 +11,12 @@ import axios from 'axios'
 import {Toast} from 'bootstrap';
 import {appLink} from '../../App'
 import { IoIosInformationCircleOutline } from "react-icons/io";
+import { createAvatar } from '@dicebear/core';
+import { lorelei,avataaars,notionists } from '@dicebear/collection';
+
+export const usernamePattern = /^[a-z]+(?:[._]+?[a-z0-9]+)*[a-z0-9]$/;
+
+export const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{7,15}$/;
 
 function Signup(props) {
 
@@ -31,7 +37,28 @@ function Signup(props) {
     setCountries(res);
   }
 
+
+  const generateAvatar = async () => {
+
+    const avatarList = ['Jasper','Pepper','Buster','Lola','Bubba','Callie','Annie','Max','Midnight','Trouble','Shadow','Lucky'];
+    let idx = Math.floor(Math.random() *  12);
+    let bgs = ["b6e3f4","c0aede","d1d4f9"];
+    let bgIdx = Math.floor(Math.random() * 3);
+    console.log(avatarList[idx]);
+    const avatar = createAvatar(notionists, {
+      seed: avatarList[idx],
+      backgroundColor: [bgs[bgIdx]],
+      radius: 50
+    });
+    let url = await avatar.toDataUri();
+    console.log(url);
+    return url;
+  }
+
   const onSignup = async (userObj) => {
+    console.log(userObj);
+    let avatar =await generateAvatar();
+    userObj["profilePicture"] = avatar;
     console.log(userObj);
     let res = await axios.post(`${appLink}/user/signup`,userObj)
     let data = res.data;

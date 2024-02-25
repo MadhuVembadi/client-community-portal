@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import DeleteAccount from './DeleteAccount'
 import EmailChange from './EmailChange'
 import PasswordChange from './PasswordChange'
+import UsernameChange from './UsernameChange'
 import {appLink} from '../../App'
 
 
@@ -20,6 +21,7 @@ function Settings(props) {
     let [emailShow, setEmailShow] = useState(false);
     let [passwordShow, setPasswordShow] = useState(false);
     let [deleteShow, setDeleteShow] = useState(false);
+    let [usernameShow, setUsernameShow] = useState(false);
 
     const handleShow = (type) => {
 
@@ -27,16 +29,25 @@ function Settings(props) {
             setEmailShow(true);
             setPasswordShow(false);
             setDeleteShow(false);
+            setUsernameShow(false);
         }
         else if (type == 'password') {
             setEmailShow(false);
             setPasswordShow(true);
             setDeleteShow(false);
+            setUsernameShow(false);
         }
         else if (type == 'delete') {
             setDeleteShow(true);
             setEmailShow(false);
             setPasswordShow(false);
+            setUsernameShow(false);
+        }
+        else{
+            setDeleteShow(false);
+            setEmailShow(false);
+            setPasswordShow(false);
+            setUsernameShow(true);
         }
     }
 
@@ -49,6 +60,9 @@ function Settings(props) {
         }
         else if (type == 'delete') {
             setDeleteShow(false);
+        }
+        else if (type == 'username') {
+            setUsernameShow(false);
         }
     }
 
@@ -106,6 +120,19 @@ function Settings(props) {
                         emailShow && <EmailChange handleClose={handleClose} handleShow={handleShow} emailShow={emailShow} setToastMsg={props.setToastMsg} toastOpen={props.toastOpen} />
                     }
                 </div>
+
+                {/* <div className='row row-cols-md-2 row-cols-1 mb-4'>
+                    <div className='col col-md-8'>
+                        <p className='mb-0'>Update username</p>
+                        <p className='text-muted'>Change your username.</p>
+                    </div>
+                    <div className='col col-md-4'>
+                        <Button onClick={() => handleShow('username')} className='w-50 d-block rounded-2'>update username</Button>
+                    </div>
+                    {
+                        usernameShow && <UsernameChange handleClose={handleClose} handleShow={handleShow} usernameShow={usernameShow} setToastMsg={props.setToastMsg} toastOpen={props.toastOpen} />
+                    }
+                </div> */}
 
                 <div className='row row-cols-md-2 row-cols-1 mb-4'>
                     <div className='col col-md-8'>

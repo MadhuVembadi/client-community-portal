@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate , useLocation} from 'react-router-dom';
 import ProfileImg from '../../Images/ProfileImg.svg'
 import NoPostsImg from '../../Images/NoPosts.svg'
-import { Button , Card} from 'react-bootstrap';
+import { Button , Card, Modal} from 'react-bootstrap';
 import {Tooltip} from 'react-tooltip'
 import './User.css'
 import axios from 'axios';
@@ -12,6 +12,8 @@ import {BiUpvote,BiSolidUpvote} from 'react-icons/bi';
 import {FaRegComment} from 'react-icons/fa'
 import {appLink} from '../../App';
 import $ from 'jquery';
+import { MdModeEdit } from "react-icons/md";
+import EditProfile from '../EditProfile/EditProfile';
 
 function User(props) {
 
@@ -21,6 +23,7 @@ function User(props) {
   let [posts,setPosts] = useState([]);
   let [user,setUser] = useState({});
   let [totalUpvotes,setTotalUpvotes] = useState(0);
+  let [editModalOpen,setEditModalOpen] = useState(false);
 
   let location = useLocation();
 
@@ -89,7 +92,7 @@ function User(props) {
   }
 
   const fetchPosts = async () => {
-    let userId = user._id;
+    let userId = user._id;  
     let currUser = userObj[0]._id;
     let res = await axios.get(`${appLink}/user/get-posts/${userId}?currUser=${currUser}`);
     console.log(res);
@@ -98,10 +101,10 @@ function User(props) {
   }
 
   const fetchUser = async () => {
+    console.log("fetch user called");
     let path = window.location.pathname;
-    let username = path.split('/')[2]
+    let username = path.split('/')[2];
     console.log(username);
-  
     let res = await axios.get(`${appLink}/user/get-user/${username}`);
     console.log(res);
     setUser(res.data.user);
@@ -123,18 +126,22 @@ function User(props) {
   
   }
 
+  // const handleEditModalClose = () => {
+  //   window.location.pathname = `/user/${userObj.username}`;
+  //   setEditModalOpen(false);
+  // }
+
   useEffect(() => {
     removeOpenCollapses();
-  },[posts,location.pathname])
+  },[location.pathname])
 
   useEffect(() => {
     fetchPosts();
   },[user,isGetPostSuccess])
 
   useEffect(() => {
-    console.log(location.pathname);
     fetchUser();
-  },[location.pathname]);
+  },[userObj,location.pathname]);
 
   return (
     <div className='user mt-5'>
@@ -143,7 +150,7 @@ function User(props) {
       <>
       <div className='user-profile row row-cols-sm-2 row-cols-1 shadow p-4 rounded m-2 '>
         <div className='user-profile-picture col col-lg-3 col-sm-5 d-flex align-items-center'>
-          <img src={ProfileImg} className='d-block mx-auto'/>
+            <img src={user.profilePicture} className='d-block mx-auto'/>
         </div>
         <div className='user-profile-info col col-lg-9 col-sm-7'>
           <div>{user.firstName} {user.lastName}</div>
@@ -155,6 +162,12 @@ function User(props) {
             <Tooltip id="navbar-tooltip-user-posts"/>
           </div>
         </div>
+        {
+          user.username == userObj[0].username &&
+          <div className=''>
+            <Button className='btn btn-none edit-profile-button  p-0' onClick={() => setEditModalOpen(true)}><MdModeEdit size={25} color='black'/></Button>
+          </div>
+        }
       </div>
       <div className='user-posts mt-4 m-2 p-2 '>
         <h5 className='mb-3'>Posts</h5>
@@ -166,7 +179,7 @@ function User(props) {
             posts.map((post,idx) => <div className='col mb-3' key={idx}>
             <Card className='w-100 h-100 mx-auto'>
               <Card.Header className='row'>
-                  <img src={ProfileImg} className='col-2 d-block post-profile-img'/>
+                  <img src={user.profilePicture} className='col-2 d-block post-profile-img'/>
                   <div className='col d-flex flex-column justify-content-center'>
                       <div className='post-username mb-0'>
                       <Button variant="none" className='text-primary mb-0 button-text ps-0' onClick={() => gotoUser(user.username)}>{user.username}</Button>
@@ -216,17 +229,17 @@ function User(props) {
                           post.comments.length != 0 &&
                           post.comments.map((comment,idx) => <div className='comment row border-bottom mt-3 pb-2'>
                               <div className='comment-profile-icon col-2'>
-                                  <img src={ProfileImg} className='w-100 d-block mx-auto comment-profile-img'/>
+                                  <img src={comment.commentUser[0].profilePicture} className='w-100 d-block mx-auto comment-profile-img'/>
                               </div>
                               <div className=' col-10'>
                                   <div className='comment-profile-username d-flex justify-content-between'>
                                     <Button variant="none" className='text-primary mb-0 button-text ps-0' 
-                                      onClick={() => gotoUser(comment.username)}
+                                      onClick={() => gotoUser(comment.commentUser[0].username)}
                                       // data-bs-toggle="collapse"
                                       // data-bs-target={`#comment-collapse-${post._id}`}
                                       // type="button"
                                     >
-                                      {comment.username}
+                                      {comment.commentUser[0].username}
                                     </Button>
                                       {/* <p>25m ago</p> */}
                                   </div>
@@ -256,6 +269,7 @@ function User(props) {
           </div>
         }
       </div>
+      <EditProfile editModalOpen={editModalOpen} setEditModalOpen={setEditModalOpen} setToastMsg={props.setToastMsg} toastOpen={props.toastOpen} />
       </>
     }
     </div>

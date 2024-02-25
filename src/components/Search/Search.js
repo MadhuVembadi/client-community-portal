@@ -53,7 +53,7 @@ function Search(props) {
                     users.map(user => 
                         <div className='search-user shadow p-4 d-sm-flex mb-3 col col-lg-5' onClick={() => goToUser(user)}>
                             <div className='search-user-profile-picture col col-lg-3 col-sm-5 d-flex align-items-center mb-3'>
-                                <img src={ProfileImg} className="d-block mx-auto"/>
+                                <img src={user.profilePicture} className="d-block mx-auto"/>
                             </div>
                             <div className='search-user-profile-info col col-lg-9 col-sm-7 d-flex flex-column justify-content-center'>
                                 <div>

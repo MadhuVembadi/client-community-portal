@@ -21,6 +21,8 @@ function getRandomNumber() {
 
 async function registerUser(newUser) {
 
+    console.log(newUser);
+
     let alreadyExists = await userModel.find({
         username:newUser.username
     })
@@ -83,6 +85,59 @@ async function getPostsUser({userId,currUser}){
                         else:false
                     }
                 }
+            }
+        },
+        {
+            $unwind:{ 
+                path:"$comments",
+                preserveNullAndEmptyArrays:true
+            }
+            },       
+        {
+        $lookup: {
+            from: "users",
+            let:{userIdStr : "$comments.userId"},
+            pipeline:[
+                {
+                $match:{
+                    $expr:{
+                    $eq:[
+                        {$toString: "$_id"},
+                        "$$userIdStr"
+                    ]
+                    }
+                }
+                }
+            ],   
+            // localField: "comments.username",
+            // foreignField: "username",
+            as: "comments.commentUser"
+        }
+        },
+        {
+            $addFields: {
+                "comments": {
+                $cond: {
+                    if: { $eq: ["$comments", { commentUser: []}] }, 
+                    then: "$REMOVE", 
+                    else: "$comments"
+                }
+                }
+            }
+        },        
+        {
+            $group:{
+                _id:"$_id",
+                "comments":{
+                $push:"$comments"
+                },
+                "userId":{$first:"$userId"},
+                "post":{$first:"$post"},
+                "upvotes":{$first:"$upvotes"},
+                "upvotesCount":{$first:"$upvotesCount"},
+                "image":{$first:"$image"},
+                "datePosted":{$first:"$datePosted"},
+                "upvoted":{$first:"$upvoted"}
             }
         }
     ])
@@ -175,6 +230,38 @@ async function sendOTP(username){
     }
 }
 
+async function updateProfileUsername(obj){
+    console.log(obj);
+    let res = await userModel.find({username:obj.newUsername});
+    if(res.length > 0) return {message:"username already taken"}
+    res = await userModel.updateOne(
+        {
+            _id:obj.userId
+        },
+        {
+            $set:{
+                username:obj.newUsername,
+            }
+        }
+    )
+    return {message:"success"}
+}
+
+async function updateProfilePicture(obj){
+    let res = await userModel.updateOne(
+        {
+            _id:obj.userId
+        },
+        {
+            $set:{
+                profilePicture:obj.imgURL,
+            }
+        }
+    )
+    console.log(res);
+    return {message:"success",profilePicture:obj.imgURL}
+}
+
 module.exports = {
     registerUser,
     loginUser,
@@ -185,5 +272,7 @@ module.exports = {
     updatePassword,
     forgotUpdate,
     deleteAccount,
-    sendOTP
+    sendOTP,
+    updateProfileUsername,
+    updateProfilePicture
 }
