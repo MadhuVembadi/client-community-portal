@@ -6,13 +6,13 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.MAILID,
-      pass: process.env.MAILPASS
-    }
-  });
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//       user: process.env.MAILID,
+//       pass: process.env.MAILPASS
+//     }
+//   });
 
 
 function getRandomNumber() {
@@ -158,7 +158,6 @@ async function getPostsUser({userId,currUser}){
 }
 
 async function getUser(username) {
-    console.log(username);
     let user = await userModel.findOne({username:username},{notifications:0,password:0});
     console.log(user);
     return {message:'success',user:user}
@@ -211,6 +210,15 @@ async function sendOTP(username){
     if(isExists.length == 0) return {message:"user not found"}
     else{
         let otp = getRandomNumber();
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: process.env.MAILID,
+              pass: process.env.MAILPASS
+            }
+        });
+
         const mailOptions = {
             from: process.env.MAILID,
             to: isExists[0].email,
@@ -231,7 +239,6 @@ async function sendOTP(username){
 }
 
 async function updateProfileUsername(obj){
-    console.log(obj);
     let res = await userModel.find({username:obj.newUsername});
     if(res.length > 0) return {message:"username already taken"}
     res = await userModel.updateOne(
@@ -244,6 +251,7 @@ async function updateProfileUsername(obj){
             }
         }
     )
+    console.log(res);
     return {message:"success"}
 }
 
@@ -274,5 +282,6 @@ module.exports = {
     deleteAccount,
     sendOTP,
     updateProfileUsername,
-    updateProfilePicture
+    updateProfilePicture,
+    getRandomNumber
 }

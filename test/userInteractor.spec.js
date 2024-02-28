@@ -10,7 +10,8 @@ const {ObjectId} = require('mongodb')
 chai.use(sinonChai);
 const mongoose = require('mongoose')
 const userModel = require('../models/userModel');
-const postModel = require('../models/postModel')
+const postModel = require('../models/postModel');
+const nodemailer = require('nodemailer')
 require('dotenv').config();
 
 const {
@@ -22,7 +23,11 @@ const {
     updateEmail,
     updatePassword,
     deleteAccount,
-    sendOTP
+    sendOTP,
+    updateProfileUsername,
+    updateProfilePicture,
+    getRandomNumber,
+    forgotUpdate
 } = require('../APIs/Interactors/user')
 
 const verifyPassword = require('../APIs/Middlewares/verifyPassword');
@@ -161,6 +166,7 @@ describe('user interactor',() => {
     let aggregateStub;
     let deleteOneStub;
     let deleteManyStub;
+    let stubTransporter
 
     beforeEach(() => {
         sampleUser = {
@@ -305,6 +311,20 @@ describe('user interactor',() => {
                 throw new Error(err.message);
             })
         })
+
+        it('should not change the status if already in the same state or userId not found',(done) => {
+            updateOneStub = sandbox.stub(mongoose.Model, 'updateOne').resolves({modifiedCount:0})
+
+            toggleNotifications({userId:'65cc65a46e7e79d90003cbee',changeTo:false})
+            .then(res => {
+                expect(res).to.have.property('message').to.equal('failure');
+                done();
+            })
+            .catch(err => {
+                console.log(err);
+                throw new Error(err.message);
+            })
+        })
     })
 
     describe('get posts of a user by userId',() => {
@@ -380,13 +400,23 @@ describe('user interactor',() => {
                 throw new Error();
             })
         })
+
+        it('should return failure if userId is incorrect',(done) => {
+            updateOneStub.resolves({matchedCount:0,modifiedCount:0})
+            
+            updateEmail({newEmail:'testemail@gmail.com',userId:'userId'})
+            .then(res => {
+                expect(res.message).to.equal('failure');
+                done();
+            })
+            .catch(err => {
+                throw new Error();
+            })
+        })
     })
 
     describe('update password',() => {
 
-        beforeEach(() => {
-
-        })
         afterEach(() => {
             updateOneStub.restore();
         })
@@ -407,19 +437,53 @@ describe('user interactor',() => {
             })
             
         })
+
+        it('should return failure if userId is not found',(done) => {
+
+            updateOneStub = sinon.stub(mongoose.Model, 'updateOne').resolves({modifiedCount:0});
+            hashStub.resolves('testpassword')
+
+            updatePassword({userId:"testuserid",newpassword:"testpassword"})
+            .then(res => {
+                expect(res).to.have.property('message').to.equal('failure');
+                done();
+            })
+            .catch(err => {
+                throw new Error(err);
+            })
+            
+        })
     })
 
     describe('update password on forgot',() => {
+
+        afterEach(() => {
+            updateOneStub.restore();
+        })
 
         it('should update the password to the newpassword',(done) => {
 
             updateOneStub = sinon.stub(mongoose.Model, 'updateOne').resolves({modifiedCount:1});
             hashStub.resolves('testpassword')
 
-            updatePassword({username:"testusername",newpassword:"testpassword"})
+            forgotUpdate({username:"testusername",newpassword:"testpassword"})
             .then(res => {
                 expect(res).to.have.property('message').to.equal('success');
-                expect(res).to.have.property('newpassword').to.equal('testpassword');
+                done();
+            })
+            .catch(err => {
+                throw new Error(err);
+            })
+        })
+
+        it('should return failure if username is not present',(done) => {
+
+            updateOneStub = sinon.stub(mongoose.Model, 'updateOne').resolves({modifiedCount:0});
+            hashStub.resolves('testpassword')
+
+            forgotUpdate({username:"testusername",newpassword:"testpassword"})
+            .then(res => {
+                expect(res).to.have.property('message').to.equal('failure');
                 done();
             })
             .catch(err => {
@@ -429,11 +493,6 @@ describe('user interactor',() => {
     })
 
     describe('delete account',() => {
-
-        // afterEach(() => {
-        //     deleteOneStub.restore();
-        //     deleteManyStub.resoter();
-        // })
 
         it('should delete account of an user and all the posts of the user',(done) => {
 
@@ -454,20 +513,116 @@ describe('user interactor',() => {
         })
     })
 
-    // describe('sent otp',() => {
-    //     it('should send otp to the user email id',(done) => {
-    //         findStub = sandbox.stub(mongoose.Model, 'find').resolves([sampleUser]);
+    describe('send OTP',() => {
+        
+        beforeEach(() => {
+            findStub.restore();
+        })
+        // afterEach(() => {
+        //     findStub.restore();
+        // })
 
-    //         sendOTP('testUsername')
-    //         .then(res => {
-    //             expect(res).to.have.property('message').to.equal('success');
-    //             done();
-    //         })
-    //         .catch(err => {
-    //             throw new Error(err);
-    //         })
-    //     }).timeout(10000)
-    // })
+        it('should return user not found if username is not registered',(done) => {
+            findStub = sinon.stub(mongoose.Model,'find').resolves([]);
+            sendOTP(sampleUser.username)
+            .then(res => {
+                expect(res).to.have.property('message').to.equal('user not found');
+                done();
+            })
+            .catch(err => {
+                console.log(err);
+                throw new Error(err.message);
+            })
+        })
+
+        it('should send an OTP if user found',(done) => {
+            findStub = sinon.stub(mongoose.Model,'find').resolves([sampleUser]);
+            
+            stubTransporter = {
+                sendMail: sinon.stub().resolves({ messageId: '12345' }) // Stub sendMail function to resolve with a dummy message ID
+            };
+
+            sinon.stub(nodemailer, 'createTransport').returns(stubTransporter);
+            
+
+            sendOTP(sampleUser.username)
+            .then(res => {
+                expect(res).to.have.property('message').to.equal('success');
+                expect(res).to.have.property('otp')
+                done();
+            })
+            .catch(err => {
+                console.log(err);
+                throw new Error(err.message);
+            })
+        })
+    })
+
+    describe('update username',() => {
+        beforeEach(() => {
+            findStub.restore();
+        })
+
+        afterEach(() => {
+            updateOneStub.restore();
+        })
+        it('should return username already taken if username is not available',(done) => {
+            findStub = sandbox.stub(mongoose.Model, 'find').resolves([sampleUser]);
+            updateProfileUsername({newUsername:"test",userId:"testUserId"})
+            .then(res => {
+                expect(res).to.have.property('message').to.equal('username already taken');
+                done();
+            })
+            .catch(err => {
+                throw new Error(err.message);
+            })
+        })
+
+        it('should update the username of the user',(done) => {
+            findStub = sandbox.stub(mongoose.Model, 'find').resolves([]);
+            updateOneStub = sandbox.stub(mongoose.Model, 'updateOne').resolves({modifiedCount:1})
+            updateProfileUsername({newUsername:"test",userId:"testUserId"})
+            .then(res => {
+                expect(res).to.have.property('message').to.equal('success');
+                done();
+            })
+            .catch(err => {
+                throw new Error(err.message);
+            })
+        })
+    })
+
+    describe('update profile picture',() => {
+
+        afterEach(() => {
+            updateOneStub.restore();
+        })
+
+        it('should upate the profile picture of the user',(done) => {
+            
+            updateOneStub = sandbox.stub(mongoose.Model, 'updateOne').resolves({modifiedCount:1})
+            updateProfilePicture({userId:"testUserId",imgURL:"newpicture"})
+            .then(res => {
+                expect(res).to.have.property('message').to.equal('success');
+                done();
+            })
+            .catch(err => {
+                throw new Error(err.message);
+            })
+        })
+    })
+
+    describe('get Random Number',() => {
+        it('should return a random number between 1000 and 9999',(done) => {
+            let res = getRandomNumber();
+            if(res >= 1000 && res <= 9999){
+                done();
+            }
+            else{
+                throw new Error('Out of boundaries')
+            }
+        })
+    })
 
 })
 

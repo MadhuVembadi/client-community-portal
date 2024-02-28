@@ -4,13 +4,13 @@ const postModel = require('../../models/postModel');
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.MAILID,
-      pass: process.env.MAILPASS
-    }
-  });
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//       user: process.env.MAILID,
+//       pass: process.env.MAILPASS
+//     }
+//   });
 
 async function postNotification(notifyObj){
 
@@ -65,6 +65,15 @@ async function sendEmail(notifyObj){
         subject: 'New interactions to your post',
         text: notifyObj.message
     };
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.MAILID,
+          pass: process.env.MAILPASS
+        }
+    });
+
     try{
         let res = await transporter.sendMail(mailOptions);
         return {message:"success"}

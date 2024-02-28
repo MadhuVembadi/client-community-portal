@@ -158,15 +158,15 @@ function User(props) {
           <Button variant="none" className='text-primary p-0 mt-2 d-block'>{user.organisation}</Button>
           <div className='user-profile-info-list mt-4 d-md-flex justify-content-between'>
             <div>{posts ? posts.length : 0} Posts</div>
-            <div data-tooltip-id="navbar-tooltip-user-posts" data-tooltip-content="Life time upvotes">{totalUpvotes} Upvotes</div>
+            <div data-tooltip-id="navbar-tooltip-user-posts" data-tooltip-content="Life time upvotes">{totalUpvotes ? totalUpvotes : 0} Upvotes</div>
             <Tooltip id="navbar-tooltip-user-posts"/>
           </div>
         </div>
         {
           user.username == userObj[0].username &&
-          <div className=''>
-            <Button className='btn btn-none edit-profile-button  p-0' onClick={() => setEditModalOpen(true)}><MdModeEdit size={25} color='black'/></Button>
-          </div>
+            <div className=''>
+              <Button className='btn btn-none edit-profile-button p-0' onClick={() => setEditModalOpen(true)}><MdModeEdit size={25} color='white'/></Button>
+            </div>
         }
       </div>
       <div className='user-posts mt-4 m-2 p-2 '>

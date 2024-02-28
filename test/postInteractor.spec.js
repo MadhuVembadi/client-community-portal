@@ -129,6 +129,20 @@ describe('Post Interactor',() => {
                 throw new Error(err);
             })
         })
+
+        it('should return a failure when postId is not found',(done) => {
+
+            updateOneStub = sandbox.stub(mongoose.Model, 'updateOne').resolves({modifiedCount:0})
+
+            likePost({postId:'65cc65a46e7e79d90003cbee',userId:'65cc65a46e7e79d90003cbee'})
+            .then(res => {
+                expect(res).to.have.property('message').to.equal('failure');
+                done();
+            })
+            .catch(err => {
+                throw new Error(err);
+            })
+        })
     })
 
     describe('downvote',() => {
@@ -140,6 +154,19 @@ describe('Post Interactor',() => {
             dislikePost({postId:'65cc65a46e7e79d90003cbee',userId:'65cc65a46e7e79d90003cbee'})
             .then(res => {
                 expect(res).to.have.property('message').to.equal('success');
+                done();
+            })
+            .catch(err => {
+                throw new Error(err);
+            })
+        })
+        it('should return a failure when postId is not found',(done) => {
+
+            updateOneStub = sandbox.stub(mongoose.Model, 'updateOne').resolves({modifiedCount:0})
+
+            dislikePost({postId:'65cc65a46e7e79d90003cbee',userId:'65cc65a46e7e79d90003cbee'})
+            .then(res => {
+                expect(res).to.have.property('message').to.equal('failure');
                 done();
             })
             .catch(err => {
@@ -164,6 +191,28 @@ describe('Post Interactor',() => {
             commentPost(obj,commentObj)
             .then(res => {
                 expect(res).to.have.property('message').to.equal('success');
+                done();
+            })
+            .catch(err => {
+                throw new Error(err);
+            })
+        })
+
+        it('should return failure when postId is not found',(done) => {
+            updateOneStub = sandbox.stub(mongoose.Model, 'updateOne').resolves({modifiedCount:0})
+
+            let commentObj = {
+                comment:"this is a test comment",
+                userId:'65cc65a46e7e79d90003cbee',
+                username:"testusername",
+            }
+            let obj = {
+                postId:'65cc65a46e7e79d90003cbee',
+                userId:'65cc65a46e7e79d90003cbee'
+            }
+            commentPost(obj,commentObj)
+            .then(res => {
+                expect(res).to.have.property('message').to.equal('failure');
                 done();
             })
             .catch(err => {
