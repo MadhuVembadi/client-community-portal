@@ -185,7 +185,7 @@ function User(props) {
                       <Button variant="none" className='text-primary mb-0 button-text ps-0' onClick={() => gotoUser(user.username)}>{user.username}</Button>
                       </div>
                       <div className='post-organisation'>
-                          <p className='mb-0'>{user.organisation}</p>
+                          <p className='mb-0' onClick={() => navigate(`/organisation/${user.organisation}`)}>{user.organisation}</p>
                       </div>
                   </div>
               </Card.Header>
