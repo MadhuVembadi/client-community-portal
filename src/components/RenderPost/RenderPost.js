@@ -118,7 +118,7 @@ function RenderPost(props) {
                     <Button variant="none" className='text-primary mb-0 button-text ps-0' onClick={() => gotoUser(postObj.user[0].username)}>{postObj.user[0].username}</Button>
                     </div>
                     <div className='post-organisation'>
-                        <p className='mb-0'>{postObj.user[0].organisation}</p>
+                        <Button variant="none" className='text-primary mb-0 button-text' onClick={() => navigate(`/organisation/${postObj.user[0].organisation}`)}>{postObj.user[0].organisation}</Button>
                     </div>
                 </div>
             </Card.Header>

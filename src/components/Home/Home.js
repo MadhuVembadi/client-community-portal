@@ -88,9 +88,21 @@ function Home(props) {
         setFeed(res.data.feed);
     }
 
+    const removeOpenCollapses = () => {
+        let collapses = $('.collapse');
+        console.log(collapses.length,collapses);
+    
+          Array(collapses).forEach(item => {
+            $(item).removeClass('show');
+          })
+      
+    }
+
     const sortBy = (event) => {
         // console.log(event.target.value);
-        fetchFeed(event.target.value)
+        fetchFeed(event.target.value);
+        localStorage.setItem('filter',event.target.value);
+        removeOpenCollapses();
     }
     
     const gotoUser = (username) => {
@@ -98,7 +110,14 @@ function Home(props) {
     }
 
     useEffect(() => {
-        fetchFeed('datePosted');
+        let filter = localStorage.getItem('filter');
+        if(filter){
+            fetchFeed(filter);
+        }
+        else{
+            localStorage.setItem('filter','datePosted');
+            fetchFeed(filter);
+        }
     },[isPostSuccess,isCommentSuccess]);
 
     return (
@@ -120,7 +139,7 @@ function Home(props) {
                                 <Button variant="none" className='text-primary mb-0 button-text' onClick={() => gotoUser(post.user[0].username)}>{post.user[0].username}</Button>
                             </div>
                             <div className='post-organisation'>
-                                <Button variant="none" className='text-primary mb-0 button-text'>{post.user[0].organisation}</Button>
+                                <Button variant="none" className='text-primary mb-0 button-text' onClick={() => navigate(`/organisation/${post.user[0].organisation}`)}>{post.user[0].organisation}</Button>
                             </div>
                         </div>
                     </Card.Header>

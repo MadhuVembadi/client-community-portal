@@ -139,6 +139,11 @@ async function getPostsUser({userId,currUser}){
                 "datePosted":{$first:"$datePosted"},
                 "upvoted":{$first:"$upvoted"}
             }
+        },
+        {
+            $sort:{
+                "datePosted":-1
+            }
         }
     ])
 

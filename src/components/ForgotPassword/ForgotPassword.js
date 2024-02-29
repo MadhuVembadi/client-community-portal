@@ -25,6 +25,10 @@ function ForgotPassword(props) {
         if(res.data && res.data == 'success'){
             navigate('/update-password');
         }
+        else{
+            props.setToastMsg('Incorrect OTP');
+            props.toastOpen();
+        }
     }
 
     const onFormSubmit = async (userObj) => {

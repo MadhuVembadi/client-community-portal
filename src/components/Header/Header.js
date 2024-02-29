@@ -27,6 +27,7 @@ import UpdatePassword from '../UpdatePassword/UpdatePassword';
 import Search from '../Search/Search';
 import {useForm} from 'react-hook-form';
 import {appLink} from '../../App'
+import Organisation from '../Organisation/Organisation';
 
 
 function Header() {
@@ -184,7 +185,7 @@ function Header() {
                 <Route path="/user/:username" element={<User setToastMsg={setToastMsg} toastOpen={toastOpen}/>}/>
                 <Route path="/settings" element={<Settings setToastMsg={setToastMsg} toastOpen={toastOpen} />}/>
                 <Route path="/search" element={<Search setToastMsg={setToastMsg} toastOpen={toastOpen}  search={search}/>}/>
-                
+                <Route path="/organisation/:org" element={<Organisation setToastMsg={setToastMsg} toastOpen={toastOpen}/>}/> 
             </Route>
             <Route path="/forgotPassword" element={<ForgotPassword setToastMsg={setToastMsg} toastOpen={toastOpen} />}/>
             <Route path="/update-password" element={<UpdatePassword setToastMsg={setToastMsg} toastOpen={toastOpen}  search={search}/>}/>

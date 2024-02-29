@@ -1,0 +1,19 @@
+.total-users:hover{
+    cursor: pointer;
+}
+
+.total-posts:hover{
+    cursor: pointer;
+}
+
+.org-user:hover{
+    cursor: pointer;
+}
+
+.total-posts.active{
+    border:1px solid blue !important;
+}
+
+.total-users.active{
+    border:1px solid blue !important;
+}

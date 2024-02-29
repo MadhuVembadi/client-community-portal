@@ -64,6 +64,8 @@ function Signup(props) {
     let data = res.data;
     console.log(res);
     if(data.message == 'success'){
+        props.setToastMsg('sign up successful');
+        props.toastOpen();
         navigate('/login');
     }
     else{

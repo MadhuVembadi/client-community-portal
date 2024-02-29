@@ -10,6 +10,7 @@ const userApp = require('./APIs/userAPI');
 const postApp = require('./APIs/postAPI');
 const notificationApp = require('./APIs/notificationAPI');
 const searchApp = require('./APIs/searchAPI');
+const orgApp = require('./APIs/organisationAPI');
 const authorize = require('./APIs/Middlewares/authorize').authorize
 
 require('dotenv').config();
@@ -27,6 +28,7 @@ app.use('/user',userApp);
 app.use('/post',authorize,postApp);
 app.use('/notification',authorize,notificationApp);
 app.use('/search',authorize,searchApp);
+app.use('/organisation',authorize,orgApp)
 
 
 //dealing with page refresh

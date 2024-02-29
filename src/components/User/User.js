@@ -155,7 +155,7 @@ function User(props) {
         <div className='user-profile-info col col-lg-9 col-sm-7'>
           <div>{user.firstName} {user.lastName}</div>
           <Button variant="none" className='text-primary p-0 mt-2 d-block' onClick={() => gotoUser(user.username)}>{user.username}</Button>
-          <Button variant="none" className='text-primary p-0 mt-2 d-block'>{user.organisation}</Button>
+          <Button variant="none" className='text-primary p-0 mt-2 d-block' onClick={() => navigate(`/organisation/${user.organisation}`)}>{user.organisation}</Button>
           <div className='user-profile-info-list mt-4 d-md-flex justify-content-between'>
             <div>{posts ? posts.length : 0} Posts</div>
             <div data-tooltip-id="navbar-tooltip-user-posts" data-tooltip-content="Life time upvotes">{totalUpvotes ? totalUpvotes : 0} Upvotes</div>
