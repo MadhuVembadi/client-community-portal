@@ -10,7 +10,7 @@ searchApp.use(exp.json());
 
 searchApp.get('/:searchQuery',expressAsyncHandler(async(request,response) => {
     searchQuery = request.params.searchQuery;
-    console.log(searchQuery);
+    // console.log(searchQuery);
     let res = await userModel.aggregate([
         {
             $search:{
@@ -23,7 +23,7 @@ searchApp.get('/:searchQuery',expressAsyncHandler(async(request,response) => {
             }
         }
     ])
-    console.log(res);
+    // console.log(res);
     response.send({message:"success",users:res});
 }))
 

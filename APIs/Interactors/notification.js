@@ -36,7 +36,7 @@ async function postNotification(notifyObj){
             }
         }
     );
-    console.log(res);
+    // console.log(res);
     return {message:'success'};
 }
 
@@ -84,7 +84,7 @@ async function sendEmail(notifyObj){
 }
 
 async function markRead({userId,notificationId}){
-    console.log("hi",notificationId,userId);
+    // console.log("hi",notificationId,userId);
     // let res = await userModel.aggregate([
     //         {
     //             $match:{
@@ -116,7 +116,7 @@ async function markRead({userId,notificationId}){
             $set: { "notifications.$.status": "read" } 
         }
     )
-    console.log("res",res);
+    // console.log("res",res);
     return {message:"success"};
 }
 

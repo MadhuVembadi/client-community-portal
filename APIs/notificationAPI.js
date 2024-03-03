@@ -35,7 +35,7 @@ notificationApp.put('/',expressAsyncHandler(postNotification));
 notificationApp.get('/:userId',expressAsyncHandler(async(request,response) => {
     let userId = request.params.userId;
     let filter = request.query.filter;
-    console.log(filter);
+    // console.log(filter);
     let res;
     if(filter != 'all'){
         let pipeline = [

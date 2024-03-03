@@ -12,7 +12,7 @@ async function getPost(request,response) {
 async function createPost(request,response) {
 
     let imgURL = "none";
-    console.log(request.file);
+    // console.log(request.file);
     if(request.file != undefined){
         imgURL = await uploadImage({imageName:request.file.filename,imagePath:request.file.path})
         // console.log(imgURL);

@@ -202,7 +202,7 @@ async function dislikePost(obj) {
 }
 
 async function commentPost(obj,commentObj) {
-    console.log(commentObj);
+    // console.log(commentObj);
     let res = await postModel.updateOne(
       {
         _id:obj.postId

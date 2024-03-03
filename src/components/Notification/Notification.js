@@ -32,9 +32,11 @@ function Notification(props) {
   }
 
   const fetchNotifications = async (userId,filter) => {
+    props.setLoading(true);
     let res = await axios.get(`${appLink}/notification/${userId}?filter=${filter}`)
     console.log(res);
-    setNotifications(res.data.notifications)
+    setNotifications(res.data.notifications);
+    props.setLoading(false);
    
   }
 
@@ -133,7 +135,7 @@ function Notification(props) {
         <div className=''>
           {/* render all the notifications fetched from the database */}
           {
-            notifications.length != 0 &&
+            !props.loading && notifications.length != 0 &&
             notifications.map((notification,idx) => 
             <div key={idx} className={`notification w-100 p-4 mb-2 rounded shadow d-flex ${notification.status}`} onClick={() => renderPost(notification._id,notification.postId)}>
               <div className='me-4'>
@@ -173,10 +175,15 @@ function Notification(props) {
             )
           }
           {
-            notifications.length == 0 && 
+            !props.loading && notifications.length == 0 && 
             <div className='mt-5'>
               <img src={NotificationImg} className='w-50 d-block mx-auto'/>
               <h6 className='text-center'>No notifications</h6>
+            </div>
+          }
+          {
+            props.loading && <div className='w-50 mt-5 text-center mx-auto'>
+                <div class="spinner-border" role="status"/>
             </div>
           }
           {/*

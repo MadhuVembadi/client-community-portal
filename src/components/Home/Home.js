@@ -83,9 +83,11 @@ function Home(props) {
     }
 
     async function fetchFeed(filter) {
+        props.setLoading(true);
         let res = await axios.get(`${appLink}/post/all/${userObj[0]._id}?filter=${filter}`);
         console.log(res);
         setFeed(res.data.feed);
+        props.setLoading(false);
     }
 
     const removeOpenCollapses = () => {
@@ -130,7 +132,7 @@ function Home(props) {
             </div>
             <div>
             {
-                feed.length != 0 && feed.map((post,idx) => 
+                !props.loading && feed.length != 0 && feed.map((post,idx) => 
                 <Card className='mx-auto mb-3'>
                     <Card.Header className='row'>
                         <img src={post.user[0].profilePicture} className='col-2 d-block post-profile-img'/>
@@ -208,10 +210,15 @@ function Home(props) {
                 )
             }
             {
-                feed.length == 0 && 
+                !props.loading && feed.length == 0 && 
                 <div className='mt-5'>
                     <img src={NoFeedImg} className='w-25 d-block mx-auto'/>
                     <h3 className='text-center'>No feed</h3>
+                </div>
+            }
+            {
+                props.loading && <div className='w-50 mt-5 text-center mx-auto'>
+                    <div class="spinner-border" role="status"/>
                 </div>
             }
             </div>

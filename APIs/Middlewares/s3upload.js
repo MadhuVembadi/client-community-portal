@@ -11,7 +11,7 @@ AWS.config.update({
 const s3 = new AWS.S3();
  
 async function uploadImage({imageName, imagePath}){
-    console.log(imageName,imagePath);
+    // console.log(imageName,imagePath);
     const params = {
         Bucket: process.env.S3_BUCKET,
         Key: imageName,

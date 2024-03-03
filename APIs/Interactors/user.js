@@ -21,7 +21,7 @@ function getRandomNumber() {
 
 async function registerUser(newUser) {
 
-    console.log(newUser);
+    // console.log(newUser);
 
     let alreadyExists = await userModel.find({
         username:newUser.username
@@ -164,7 +164,7 @@ async function getPostsUser({userId,currUser}){
 
 async function getUser(username) {
     let user = await userModel.findOne({username:username},{notifications:0,password:0});
-    console.log(user);
+    // console.log(user);
     return {message:'success',user:user}
 }
 
@@ -256,7 +256,7 @@ async function updateProfileUsername(obj){
             }
         }
     )
-    console.log(res);
+    // console.log(res);
     return {message:"success"}
 }
 
@@ -271,7 +271,7 @@ async function updateProfilePicture(obj){
             }
         }
     )
-    console.log(res);
+    // console.log(res);
     return {message:"success",profilePicture:obj.imgURL}
 }
 

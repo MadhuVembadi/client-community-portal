@@ -4,12 +4,12 @@ require('dotenv').config();
 function authorize(req,res,next){
     
     token = req.cookies.jwt;
-    console.log(token);
+    // console.log(token);
     if(token){
         jwt.verify(token,process.env.SECRET_KEY,(err,decodedToken) => {
-            console.log(decodedToken);
+            // console.log(decodedToken);
             if(err){
-                console.log(err);
+                // console.log(err);
                 res.send({message:"unauthorized access"})
                 // res.redirect('/login');
             }

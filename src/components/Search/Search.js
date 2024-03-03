@@ -10,10 +10,12 @@ function Search(props) {
     let [users,setUsers] = useState([]);
     const getData = async (searchQuery) => {
 
+        props.setLoading(true);
         let res = await axios.get(`/search/${searchQuery}`);
         console.log(res);
         if(res.data.users)
             setUsers(res.data.users);
+        props.setLoading(false);
     }
     
     const navigate = useNavigate();
@@ -49,7 +51,7 @@ function Search(props) {
                     </div>
                 </div> */}
                 {
-                    users.length != 0 && 
+                    !props.loading && users.length != 0 && 
                     users.map(user => 
                         <div className='search-user shadow p-4 d-sm-flex mb-3 col col-lg-5' onClick={() => goToUser(user)}>
                             <div className='search-user-profile-picture col col-lg-3 col-sm-5 d-flex align-items-center mb-3'>
@@ -66,10 +68,15 @@ function Search(props) {
                     )
                 }
                 {
-                    users.length == 0 && 
-                    <div>
+                    !props.loading && users.length == 0 && 
+                    <div className='mx-auto mt-5'>
                         <img src={NoPostsImg} className='w-25 d-block mx-auto mb-3'/>
                         <h3 className='text-center'>No Users found</h3>
+                    </div>
+                }
+                {
+                    props.loading && <div className='w-50 mt-5 text-center mx-auto'>
+                        <div class="spinner-border" role="status"/>
                     </div>
                 }
             </div>

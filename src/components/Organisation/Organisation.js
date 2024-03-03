@@ -27,10 +27,12 @@ function Organisation(props) {
 
 
     async function fetchData(org) {
+        props.setLoading(true);
         let res = await axios.get(`${appLink}/organisation/stats/${org}?user=${userObj[0]._id}`);
         setUsers(res.data.users);
         setPosts(res.data.posts);
         console.log(res);
+        props.setLoading(false);
     }
 
     const goToUser = (user) => {
@@ -74,7 +76,7 @@ function Organisation(props) {
             showUsers && 
             <div className='org-users w-75 mx-auto mt-5'>
                 {
-                    users.map(user => 
+                    !props.loading && users.map(user => 
                         <div className='org-user shadow p-4 d-sm-flex justify-content-around mb-3 col col-lg-5 w-100 mt-2' onClick={() => goToUser(user)}>
                             <div className='org-user-profile-picture col col-lg-2 col-sm-3 d-flex align-items-center mb-3'>
                                 <img src={user.profilePicture} className="d-block mx-auto"/>
@@ -89,6 +91,11 @@ function Organisation(props) {
                         </div>
                     )
                 }
+                {
+                    props.loading && <div className='w-50 mt-5 text-center mx-auto'>
+                        <div class="spinner-border" role="status"/>
+                    </div>
+                }
             </div>
         }
 
@@ -96,7 +103,7 @@ function Organisation(props) {
             showPosts && 
             <div className='org-posts w-50 mx-auto mt-5'>
             {
-                posts.map((post,idx) => 
+                !props.loading && posts.map((post,idx) => 
                 <Card className='mx-auto mb-3'>
                     <Card.Header className='row'>
                         <img src={post.user.profilePicture} className='col-2 d-block post-profile-img'/>
@@ -172,6 +179,11 @@ function Organisation(props) {
                     </div> */}
                 </Card>
                 )
+            }
+            {
+                props.loading && <div className='w-50 mt-5 text-center mx-auto'>
+                    <div class="spinner-border" role="status"/>
+                </div>
             }
             </div>
         }

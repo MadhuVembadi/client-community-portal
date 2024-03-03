@@ -41,6 +41,8 @@ function Header() {
     
     let [search,setSearch] = useState(false);
 
+    let [loading,setLoading] = useState(false);
+
     const toastOpen = () => {
         const toastLiveExample = document.getElementById('liveToast');
         const toastBootstrap = new Toast(toastLiveExample,{
@@ -178,14 +180,14 @@ function Header() {
             <Route path="/login" element={<Login setToastMsg={setToastMsg} toastOpen={toastOpen} />} />
             <Route path="/signup" element={<Signup setToastMsg={setToastMsg} toastOpen={toastOpen}/>}/>
             <Route element={<PrivateRoutes/>}>
-                <Route path="/home" element={<Home setToastMsg={setToastMsg} toastOpen={toastOpen}/>} />
+                <Route path="/home" element={<Home setToastMsg={setToastMsg} toastOpen={toastOpen} loading={loading} setLoading={setLoading}/>}/>
                 <Route path="/post" element={<Post setToastMsg={setToastMsg} toastOpen={toastOpen}/>} />
                 <Route path="/view" element={<RenderPost setToastMsg={setToastMsg} toastOpen={toastOpen}/>} />
-                <Route path="/notifications" element={<Notification setToastMsg={setToastMsg} toastOpen={toastOpen}/>}/>
-                <Route path="/user/:username" element={<User setToastMsg={setToastMsg} toastOpen={toastOpen}/>}/>
+                <Route path="/notifications" element={<Notification setToastMsg={setToastMsg} toastOpen={toastOpen} loading={loading} setLoading={setLoading}/> }/>
+                <Route path="/user/:username" element={<User setToastMsg={setToastMsg} toastOpen={toastOpen} loading={loading} setLoading={setLoading}/>}/>
                 <Route path="/settings" element={<Settings setToastMsg={setToastMsg} toastOpen={toastOpen} />}/>
-                <Route path="/search" element={<Search setToastMsg={setToastMsg} toastOpen={toastOpen}  search={search}/>}/>
-                <Route path="/organisation/:org" element={<Organisation setToastMsg={setToastMsg} toastOpen={toastOpen}/>}/> 
+                <Route path="/search" element={<Search setToastMsg={setToastMsg} toastOpen={toastOpen} search={search} loading={loading} setLoading={setLoading}/>}/>
+                <Route path="/organisation/:org" element={<Organisation setToastMsg={setToastMsg} toastOpen={toastOpen} loading={loading} setLoading={setLoading}/>}/> 
             </Route>
             <Route path="/forgotPassword" element={<ForgotPassword setToastMsg={setToastMsg} toastOpen={toastOpen} />}/>
             <Route path="/update-password" element={<UpdatePassword setToastMsg={setToastMsg} toastOpen={toastOpen}  search={search}/>}/>
