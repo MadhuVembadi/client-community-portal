@@ -77,15 +77,15 @@ function CommentsForm(props) {
         // dispatch(clearPost);
       }
       else{
-        if(isCommentLoading){
-          toggleToast('posting...');
-        }
-        else if(isCommentSuccess){
-          toggleToast('posted');
-        }
-        else if(isCommentError){
-          toggleToast(commentErrMsg)
-        }
+        // if(isCommentLoading){
+        //   toggleToast('posting...');
+        // }
+        // else if(isCommentSuccess){
+        //   toggleToast('posted');
+        // }
+        // else if(isCommentError){
+        //   toggleToast(commentErrMsg)
+        // }
       }
     }
   },[isCommentLoading,isCommentSuccess,isCommentError])

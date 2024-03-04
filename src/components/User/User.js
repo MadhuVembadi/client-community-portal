@@ -24,6 +24,7 @@ function User(props) {
   let [user,setUser] = useState({});
   let [totalUpvotes,setTotalUpvotes] = useState(0);
   let [editModalOpen,setEditModalOpen] = useState(false);
+  let [commentLoading,setCommentLoading] = useState(false);
 
   let location = useLocation();
 
@@ -35,7 +36,7 @@ function User(props) {
 
         let res = await axios.post(`${appLink}/notification/send-email`,notifyObj);
         console.log(res);
-}
+  }
 
   const updateVote = async (op,obj) => {
     let res = await axios.put(`${appLink}/post/${op}`,obj);
@@ -57,35 +58,37 @@ function User(props) {
         sendEmail(notificationObj);
         console.log(res);
     }
-    fetchPosts();  
+    // fetchPostsSilent();  
   }
 
   const toggleVote = (post) => {
-      console.log(post);
-      if(post.upvoted){
-        updateVote('dislike',{userId:userObj[0]._id,postId:post._id,upvotesCount:post.upvotesCount - 1})
-      }
-      else{
-        updateVote('like',{userId:userObj[0]._id,postId:post._id,upvotesCount:post.upvotesCount + 1,postedBy:user._id})
-      }
+      // console.log(post);
+      // if(post.upvoted){
+      //   updateVote('dislike',{userId:userObj[0]._id,postId:post._id,upvotesCount:post.upvotesCount - 1})
+      // }
+      // else{
+      //   updateVote('like',{userId:userObj[0]._id,postId:post._id,upvotesCount:post.upvotesCount + 1,postedBy:user._id})
+      // }
 
-      // let newFeed = feed.map( post => {
-      //     console.log(post._id,postId);
-      //     if(post._id == postId){
-      //         console.log(post.upvoted);
-      //         if(post.upvoted){
-      //             post.upvotesCount = post.upvotesCount - 1;
-      //             updateVote('dislike',{userId:userObj[0]._id,postId:postId,upvotesCount:post.upvotesCount})
-      //         }
-      //         else{
-      //             post.upvotesCount = post.upvotesCount + 1;
-      //             updateVote('like',{userId:userObj[0]._id,postId:postId,upvotesCount:post.upvotesCount,postedBy:post.userId})
-      //         }
-      //         post.upvoted = !post.upvoted;
-      //     }
-      //     return post;
-      // })
-      // setFeed(newFeed);
+      let newPosts = posts.map( postArr => {
+          console.log(postArr._id,post._id);
+          if(post._id == postArr._id){
+              console.log(post.upvoted);
+              if(postArr.upvoted){
+                  postArr.upvotesCount = postArr.upvotesCount - 1;
+                  updateVote('dislike',{userId:userObj[0]._id,postId:post._id,upvotesCount:post.upvotesCount - 1});
+                  setTotalUpvotes(totalUpvotes => totalUpvotes  - 1);
+              }
+              else{
+                  postArr.upvotesCount = postArr.upvotesCount + 1;
+                  updateVote('like',{userId:userObj[0]._id,postId:post._id,upvotesCount:post.upvotesCount + 1,postedBy:user._id})
+                  setTotalUpvotes(totalUpvotes => totalUpvotes + 1);
+              }
+              postArr.upvoted = !postArr.upvoted;
+          }
+          return postArr;
+      })
+      setPosts(newPosts);
 
       // update in db;
       
@@ -100,6 +103,17 @@ function User(props) {
     setPosts(res.data.posts);
     setTotalUpvotes(res.data.totalUpvotes);
     props.setLoading(false);
+  }
+
+  const fetchPostsSilent = async () => {
+    setCommentLoading(true);
+    let userId = user._id;  
+    let currUser = userObj[0]._id;
+    let res = await axios.get(`${appLink}/user/get-posts/${userId}?currUser=${currUser}`);
+    console.log(res);
+    setPosts(res.data.posts);
+    setTotalUpvotes(res.data.totalUpvotes);
+    setCommentLoading(false);
   }
 
   const fetchUser = async () => {
@@ -141,7 +155,11 @@ function User(props) {
 
   useEffect(() => {
     fetchPosts();
-  },[user,isGetPostSuccess])
+  },[user])
+
+  useEffect(() => {
+    fetchPostsSilent()
+  },[isGetPostSuccess])
 
   useEffect(() => {
     fetchUser();
@@ -229,6 +247,11 @@ function User(props) {
                 <div className='collapse ms-4 me-4' id={`comment-collapse-${post._id}`} >
                     <div>
                         <CommentsForm post={post} user={user} userObj={userObj} setToastMsg={props.setToastMsg} toastOpen={props.toastOpen}/>
+                        {
+                            commentLoading && <div className='w-50 mt-5 text-center mx-auto'>
+                                <div class="spinner-border" role="status"/>
+                            </div>
+                        }
                         {
                             post.comments.length != 0 &&
                             post.comments.map((comment,idx) => <div className='comment row border-bottom mt-3 pb-2'>

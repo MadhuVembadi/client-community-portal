@@ -35,7 +35,6 @@ notificationApp.put('/',expressAsyncHandler(postNotification));
 notificationApp.get('/:userId',expressAsyncHandler(async(request,response) => {
     let userId = request.params.userId;
     let filter = request.query.filter;
-    // console.log(filter);
     let res;
     if(filter != 'all'){
         let pipeline = [
@@ -57,12 +56,10 @@ notificationApp.get('/:userId',expressAsyncHandler(async(request,response) => {
             }
         ]
         res = await userModel.aggregate(pipeline);
-        // console.log(res);
         response.send({message:'success',notifications:res.length > 0 ? res[0].notifications : [],present:res.length > 0});
     }
     else{
         res = await userModel.findOne({_id:[userId]})
-        // console.log(res);
         response.send({message:'success',notifications:res.notifications,present:true})
     }
 }))

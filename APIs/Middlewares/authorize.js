@@ -9,7 +9,10 @@ function authorize(req,res,next){
         jwt.verify(token,process.env.SECRET_KEY,(err,decodedToken) => {
             // console.log(decodedToken);
             if(err){
-                // console.log(err);
+                if(err.message == "jwt expired"){
+                    res.send({message:'session expired'});
+                }
+                // console.log(err.message);
                 res.send({message:"unauthorized access"})
                 // res.redirect('/login');
             }

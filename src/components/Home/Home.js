@@ -19,10 +19,11 @@ function Home(props) {
 
     let {userObj,isLoginSuccess} = useSelector(state => state.user);
     let {isPostSuccess} = useSelector(state => state.post);
-    let {isCommentSuccess} = useSelector(state => state.comment);
+    let {isCommentSuccess,isCommentLoading} = useSelector(state => state.comment);
 
 
     let [feed,setFeed] = useState([]);
+    let [commentLoading,setCommentLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -86,8 +87,18 @@ function Home(props) {
         props.setLoading(true);
         let res = await axios.get(`${appLink}/post/all/${userObj[0]._id}?filter=${filter}`);
         console.log(res);
-        setFeed(res.data.feed);
+        let newFeed = res.data.feed;
+        setFeed(newFeed); 
         props.setLoading(false);
+    }
+
+    async function fetchFeedSilent(filter) {
+        setCommentLoading(true);
+        let res = await axios.get(`${appLink}/post/all/${userObj[0]._id}?filter=${filter}`);
+        console.log(res);
+        let newFeed = res.data.feed;
+        setFeed(newFeed);  
+        setCommentLoading(false);   
     }
 
     const removeOpenCollapses = () => {
@@ -120,7 +131,18 @@ function Home(props) {
             localStorage.setItem('filter','datePosted');
             fetchFeed(filter);
         }
-    },[isPostSuccess,isCommentSuccess]);
+    },[isPostSuccess]);
+
+    useEffect(() => {
+        let filter = localStorage.getItem('filter');
+        if(filter){
+            fetchFeedSilent(filter);
+        }
+        else{
+            localStorage.setItem('filter','datePosted');
+            fetchFeedSilent(filter);
+        }
+    },[isCommentSuccess])
 
     return (
         <div className='Home mt-3'>
@@ -183,6 +205,11 @@ function Home(props) {
                     <div className='collapse ms-4 me-4' id={`comment-collapse-${post._id}`}>
                         <div>
                             <CommentsForm post={post} userObj={userObj} setToastMsg={props.setToastMsg} toastOpen={props.toastOpen}/>
+                            {
+                                commentLoading && <div className='w-50 mt-5 text-center mx-auto'>
+                                    <div class="spinner-border" role="status"/>
+                                </div>
+                            }
                             {
                                 post.comments.length != 0 &&
                                 post.comments.map((comment,idx) => <div className='comment row border-bottom mt-3 pb-2'>

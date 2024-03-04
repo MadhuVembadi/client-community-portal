@@ -60,6 +60,7 @@ function Header() {
         
         let actionObj = userLogout(userObj);
         dispatch(actionObj);
+        localStorage.clear();
         
     }
 

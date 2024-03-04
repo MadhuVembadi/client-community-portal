@@ -11,6 +11,7 @@ const postApp = require('./APIs/postAPI');
 const notificationApp = require('./APIs/notificationAPI');
 const searchApp = require('./APIs/searchAPI');
 const orgApp = require('./APIs/organisationAPI');
+const expressAsyncHandler = require('express-async-handler');
 const authorize = require('./APIs/Middlewares/authorize').authorize
 
 require('dotenv').config();
@@ -23,7 +24,7 @@ app.use(cors())
 // connect build of react app with node.js
 app.use(exp.static(path.join(__dirname, './build')))
 
-
+app.use('/validate',authorize);
 app.use('/user',userApp);
 app.use('/post',authorize,postApp);
 app.use('/notification',authorize,notificationApp);
