@@ -29,7 +29,8 @@ app.use('/user',userApp);
 app.use('/post',authorize,postApp);
 app.use('/notification',authorize,notificationApp);
 app.use('/search',authorize,searchApp);
-app.use('/organisation',authorize,orgApp)
+app.use('/organisation',authorize,orgApp);
+app.use('/call-record',callRecordApp);
 
 
 //dealing with page refresh
