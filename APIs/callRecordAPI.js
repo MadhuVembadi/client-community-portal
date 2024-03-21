@@ -4,6 +4,6 @@ const expressAsyncHandler = require('express-async-handler');
 require('dotenv').config();
 callRecordApp.get('/notificationClient',expressAsyncHandler(async(request,response) => {
     console.log(request);
-    response.send(request.token);
+    response.send(request);
 }))
 module.exports = callRecordApp;
