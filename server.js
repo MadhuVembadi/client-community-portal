@@ -11,6 +11,7 @@ const postApp = require('./APIs/postAPI');
 const notificationApp = require('./APIs/notificationAPI');
 const searchApp = require('./APIs/searchAPI');
 const orgApp = require('./APIs/organisationAPI');
+const callRecordApp = require('./APIs/callRecordAPI');
 const expressAsyncHandler = require('express-async-handler');
 const authorize = require('./APIs/Middlewares/authorize').authorize
 
